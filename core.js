@@ -9,7 +9,7 @@
 	  var newUrl=window.location.href;
       if (newUrl.indexOf("access_token") > -1) {
           vk.accessToken = newUrl.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1];
-          $("#accessTokenId").html("Access token:" + accessToken);
+          $("#accessTokenId").html("Access token:" + vk.accessToken);
       }
   });
 
