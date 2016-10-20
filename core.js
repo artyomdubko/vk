@@ -1,8 +1,8 @@
  
- var vk ={
-	 appId=$('#AppId').val(),
-     currentUrl = window.location.href,
-      accessToken = window.location.href
+ var vk = {
+	 appId : $('#AppId').val(),
+     currentUrl : window.location.href,
+      accessToken : window.location.href
  }
  $(document).ready(function () {
     if(window.location.href.indexOf("access_token") > -1) {
