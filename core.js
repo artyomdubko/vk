@@ -67,7 +67,7 @@
   
 
 function ajaxRequest(url) { 
-      $.ajax({
+      return  $.ajax({
           url: url,
           method: "GET",
           crossDomain: true,
