@@ -33,7 +33,7 @@
    } 
    
    function startProcess() {   
-        vk.groupId = $(".wallId").val();
+        vk.groupId = $("#wallId").val();
          getGroupOrUserInfo();
    }  
    
