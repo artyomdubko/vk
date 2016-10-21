@@ -34,11 +34,33 @@
    
    function startProcess() {   
         vk.groupId = $(".wallId").val();
-        getGroupOrUserInfo();
+         getGroupOrUserInfo();
    }  
    
-   function getGroupOrUserInfo() {    
-	   var url =" https://api.vk.com/method/wall.get?owner_id="+ vk.groupId +"&access_token="+vk.accessToken;
+   function getGroupOrUserInfo() {     
+	     var params = {
+      "owner_id": vk.groupId
+		 }
+	  getJsonFromRequest("wall.get",params);
+  } 
+   
+   function getJsonFromRequest(methodName,params) {   
+       var parsedParametres = getParamsStringFromDictionary (params);
+	   var url =" https://api.vk.com/method/" + methodName+ "?" + parsedParametres;
+	   
+	   
+	  $.ajax({ 
+        url:url,
+        method: "GET",
+		async: false,
+        dataType : "jsonp",
+        success: function (data) { 
+		   
+        },
+        error: function (data) {
+            console.log(data.d);
+        }
+        });
    } 
    
     function getParamsStringFromDictionary (paramsDictionary) {
