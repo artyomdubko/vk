@@ -92,6 +92,6 @@
           url: url,
           method: "GET",
           crossDomain: true,
-          dataType: 'json'
+          dataType: 'jsonp'
       });
   }
