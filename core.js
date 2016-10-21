@@ -35,17 +35,31 @@
   function startProcess() {
       vk.groupId = $("#wallId").val();
       getGroupOrUserInfo();
-	  setTimeout(function(){ 
-	     
-	  
+	  var vkTimer = setInterval(function(){ 
+	     var response = getJsonFromRequest("wall.get", params);
+	     if (response > vk.postsCount)
+		 {
+			 clearInterval(vkTimer);
+			 
+		 }
 	  }, vk.requestInterval);
   }
 
-  function getGroupOrUserInfo() {
+  function addCommentToPost() {  
       var params = {
           "owner_id": vk.groupId
       }
-      var reponse = getJsonFromRequest("wall.get", params);
+      var response = getJsonFromRequest("wall.get", params);
+      vk.postsCount = response[0];
+      $("#postsCount").html(response[0]);
+      $("#lastPostValue").html(response[1].text.substring(0, 100));	   //response[0] - posts count, response[1-...] - posts
+  }
+  
+  function getGroupOrUserInfo() { //set to dropdown change
+      var params = {
+          "owner_id": vk.groupId
+      }
+      var response = getJsonFromRequest("wall.get", params);
       vk.postsCount = response[0];
       $("#postsCount").html(response[0]);
       $("#lastPostValue").html(response[1].text.substring(0, 100));	   //response[0] - posts count, response[1-...] - posts
@@ -78,6 +92,6 @@
           url: url,
           method: "GET",
           crossDomain: true,
-          dataType: 'jsonp'
+          dataType: 'json'
       });
   }
