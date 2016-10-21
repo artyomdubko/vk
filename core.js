@@ -2,7 +2,7 @@
       appId: $('#AppId').val(),
       groupId: "",
       currentUrl: window.location.href,
-      requestInterval: window.location.href,
+      requestInterval: 500,             //by default
       currentUrlWithoutAnything: (location.protocol + '//' + location.host + location.pathname).replace(/\/$/, ""),
       accessToken: ""
   }
@@ -32,8 +32,7 @@
   }
 
   function startProcess() {
-      vk.groupId = $("#wallId").val();
-      getGroupOrUserInfo();
+      vk.groupId = $("#wallId").val(); 
   }
 
   function getGroupOrUserInfo() {
@@ -41,22 +40,23 @@
           "owner_id": vk.groupId
       }
       getJsonFromRequest("wall.get", params);
+              console.log(222);
   }
 
   function getJsonFromRequest(methodName, params) {
-      var parsedParametres = getParamsStringFromDictionary(params);
-      var url = " https://api.vk.com/method/" + methodName + "?" + parsedParametres;
-
+      var paramsString = getParamsStringFromDictionary(params);
+      var url = " https://api.vk.com/method/" + methodName + "?" + paramsString;
 
       $.ajax({
           url: url,
           method: "GET",
-          async: false,
           crossDomain: true,
           dataType: 'jsonp',
+          async: false,
           success: function(data) {
 			  $("#postsCount").html(data.response[0]);
-			  $("#lastPostValue").html(data.response[1].text.substring(0, 100));	               
+			  $("#lastPostValue").html(data.response[1].text.substring(0, 100));	
+              console.log(1111);               
           },
           error: function(data) {
               console.log(data.d);
