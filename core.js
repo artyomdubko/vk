@@ -65,8 +65,8 @@
       var url = " https://api.vk.com/method/" + methodName + "?" + paramsString;
       var response = "";
       $.when(ajaxRequest(url)).done(function(data) {
-          var response = data.response;
-          $("#requestsCount").html ($("#requestsCount").val()+1);
+          var response = data.response; 
+		  $("#requestsCount").html ( parseInt ($("#requestsCount").html ()) + 1);   //increment request count
       });
 
   }
