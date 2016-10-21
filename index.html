@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
 <link rel="shortcut icon" type="image/png" href="./favicon.ico">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
 <script src="./core.js"></script> 
 </head>
 <body> 
-<div class="getting_auth">
+<div class="getting-auth">
 <input type="text" id="AppId" value="4753143"/><br><br> 
 <button onclick="redirectToGetToken()">Get auth token</button>
 </div>
@@ -23,6 +25,17 @@
 </datalist>
 <button onclick="startProcess()">Start Process!</button>
 <p>Posts count:</p><p id=postsCount> - </p>  <p>Last post:</p><p id=lastPostValue> - </p><br> 
+ 
+
+<div class="adding-parameters-area">
+<div class="comments-area">
+<input type="checkbox" id="addCommentCheckbox"> Add comment<br>
+<input type="text" id="commentText" value='Сборная Тринидада'/><br>
+<input type="number" id="commentsCount" min="1" max="10" value="1" /><br>
+</div>
+<div class="open-link-area">
+<input type="checkbox" id="openLinkCheckbox">Open link<br>
+</div>
 </div>
 
 </body>
