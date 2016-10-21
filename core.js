@@ -1,8 +1,9 @@
   var vk = {
       appId: $('#AppId').val(),
       groupId: "",
+      postsCount: "",
       currentUrl: window.location.href,
-      requestInterval: 500,             //by default
+      requestInterval: 500, //by default
       currentUrlWithoutAnything: (location.protocol + '//' + location.host + location.pathname).replace(/\/$/, ""),
       accessToken: ""
   }
@@ -32,16 +33,22 @@
   }
 
   function startProcess() {
-      vk.groupId = $("#wallId").val(); 
-	  getGroupOrUserInfo();
+      vk.groupId = $("#wallId").val();
+      getGroupOrUserInfo();
+	  setTimeout(function(){ 
+	     
+	  
+	  }, vk.requestInterval);
   }
 
   function getGroupOrUserInfo() {
       var params = {
           "owner_id": vk.groupId
       }
-      getJsonFromRequest("wall.get", params);
-              console.log(222);
+      var reponse = getJsonFromRequest("wall.get", params);
+      vk.postsCount = response[0];
+      $("#postsCount").html(response[0]);
+      $("#lastPostValue").html(response[1].text.substring(0, 100));	   //response[0] - posts count, response[1-...] - posts
   }
 
   function getParamsStringFromDictionary(paramsDictionary) {
@@ -52,25 +59,25 @@
       }
       return paramsString
   }
-  
+
   function getJsonFromRequest(methodName, params) {
       var paramsString = getParamsStringFromDictionary(params);
       var url = " https://api.vk.com/method/" + methodName + "?" + paramsString;
-		  $.when(ajaxRequest(url)).done(function(data){
-			  $("#postsCount").html(data.response[0]);
-			  $("#lastPostValue").html(data.response[1].text.substring(0, 100));	
-              console.log(1111);           
-		});
-     
-  }
-  
-  
+      var response = "";
+      $.when(ajaxRequest(url)).done(function(data) {
+          var response = data.response;
+          $("#requestsCount").html ($("#requestsCount").val()+1);
+      });
 
-function ajaxRequest(url) { 
-      return  $.ajax({
+  }
+
+
+
+  function ajaxRequest(url) {
+      return $.ajax({
           url: url,
           method: "GET",
           crossDomain: true,
-          dataType: 'jsonp' 
+          dataType: 'jsonp'
       });
-}
+  }
