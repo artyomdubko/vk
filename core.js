@@ -44,27 +44,6 @@
               console.log(222);
   }
 
-  function getJsonFromRequest(methodName, params) {
-      var paramsString = getParamsStringFromDictionary(params);
-      var url = " https://api.vk.com/method/" + methodName + "?" + paramsString;
-
-      $.ajax({
-          url: url,
-          method: "GET",
-          crossDomain: true,
-          dataType: 'jsonp',
-          async: false,
-          success: function(data) {
-			  $("#postsCount").html(data.response[0]);
-			  $("#lastPostValue").html(data.response[1].text.substring(0, 100));	
-              console.log(1111);               
-          },
-          error: function(data) {
-              console.log(data.d);
-          }
-      });
-  }
-
   function getParamsStringFromDictionary(paramsDictionary) {
       var paramsString = "";
       for (key in paramsDictionary) {
@@ -73,3 +52,25 @@
       }
       return paramsString
   }
+  
+  function getJsonFromRequest(methodName, params) {
+      var paramsString = getParamsStringFromDictionary(params);
+      var url = " https://api.vk.com/method/" + methodName + "?" + paramsString;
+		  $.when(ajaxRequest(url)).done(function(data){
+			  $("#postsCount").html(data.response[0]);
+			  $("#lastPostValue").html(data.response[1].text.substring(0, 100));	
+              console.log(1111);           
+		});
+     
+  }
+  
+  
+
+function ajaxRequest(url) { 
+      $.ajax({
+          url: url,
+          method: "GET",
+          crossDomain: true,
+          dataType: 'jsonp' 
+      });
+}
