@@ -55,8 +55,8 @@
           crossDomain: true,
           dataType: 'jsonp',
           success: function(data) {
-			  $("#postsCount").val(data.response[0]);
-			  $("#lastPostValue").val(data.response[1].text.substring(0, 100));	               
+			  $("#postsCount").html(data.response[0]);
+			  $("#lastPostValue").html(data.response[1].text.substring(0, 100));	               
           },
           error: function(data) {
               console.log(data.d);
