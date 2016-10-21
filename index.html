@@ -9,9 +9,20 @@
 <body> 
 <div class="getting_auth">
 <input type="text" id="AppId" value="4753143"/><br><br> 
-<button onclick="RedirectToGetToken()">Get auth token</button>
+<button onclick="redirectToGetToken()">Get auth token</button>
 </div>
 <p id=accessTokenId>Access token: -.</p>
-<p>Request interval, ms:</p><input type="text" id="requestInverval" value="500"/><br>  
+<p>Request interval, ms:</p><input type="text" id="requestInterval" value="500"/> 
+<br> 
+<br> 
+<input type="text" id="wallId" name="product" list="ids"/>
+<datalist id="ids">
+    <option value="-38010791">-38010791 (mzgb)</option>
+    <option value="-17633860">-17633860 (test)</option>
+    <option value="-92868471">-92868471 (pubquiz)</option>
+</datalist>
+<button onclick="startProcess()">Start Process!</button>
+</div>
+
 </body>
 </html>
