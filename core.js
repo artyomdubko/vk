@@ -39,8 +39,7 @@
 	     var response = getJsonFromRequest("wall.get", params);
 	     if (response > vk.postsCount)
 		 {
-			 clearInterval(vkTimer);
-			 
+			 clearInterval(vkTimer);			 
 		 }
 	  }, vk.requestInterval);
   }
@@ -65,14 +64,6 @@
       $("#lastPostValue").html(response[1].text.substring(0, 100));	   //response[0] - posts count, response[1-...] - posts
   }
 
-  function getParamsStringFromDictionary(paramsDictionary) {
-      var paramsString = "";
-      for (key in paramsDictionary) {
-          var value = paramsDictionary[key];
-          paramsString += key + "=" + value + "&";
-      }
-      return paramsString
-  }
 
   function getJsonFromRequest(methodName, params) {
       var paramsString = getParamsStringFromDictionary(params);
@@ -85,8 +76,6 @@
          return response;
   }
 
-
-
   function ajaxRequest(url) {
       return $.ajax({
           url: url,
@@ -96,4 +85,14 @@
           crossDomain: true,
           dataType: 'jsonp'
       });
+  }
+  
+  
+  function getParamsStringFromDictionary(paramsDictionary) {
+      var paramsString = "";
+      for (key in paramsDictionary) {
+          var value = paramsDictionary[key];
+          paramsString += key + "=" + value + "&";
+      }
+      return paramsString
   }
