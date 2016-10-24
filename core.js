@@ -68,15 +68,17 @@
       var paramsString = getParamsStringFromDictionary(params);
       var url = " https://api.vk.com/method/" + methodName + "?&access_token=" + vk.accessToken + "&v=5.59&" + paramsString;
       var response = "";
-      $.when(ajaxRequest(url)).done(function(data) {
-          var response = data.response;
-          $("#requestsCount").html(parseInt($("#requestsCount").html()) + 1); //increment request count
-      });
-      var waitForResponseIterval = setInterval(function() { 
-          if (response != "") {
-              clearInterval(waitForResponseIterval);
-          }
-      }, 100);
+      $.ajax({
+                url: url,
+                type: 'GET',
+				async: false,
+          crossDomain: true,
+          dataType: 'jsonp'
+            }).then(function (data) { 
+                console.log (data);
+            }).fail(function (err) { 
+                console.log (err);
+            });
 
       return response;
   }
