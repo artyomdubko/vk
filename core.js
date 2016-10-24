@@ -81,8 +81,8 @@
       $.when(ajaxRequest(url)).done(function(data) {
           var response = data.response; 
 		  $("#requestsCount").html ( parseInt ($("#requestsCount").html ()) + 1);   //increment request count
+         return response;
       });
-       return response;
   }
 
 
