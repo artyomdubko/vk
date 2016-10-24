@@ -35,25 +35,24 @@
   function startProcess() {
       vk.groupId = $("#wallId").val();
       getGroupOrUserInfo();
-	  var vkTimer = setInterval(function(){ 
-	     var response = getJsonFromRequest("wall.get", params);
-	     if (response > vk.postsCount)
-		 {
-			 clearInterval(vkTimer);			 
-		 }
-	  }, vk.requestInterval);
+      var vkTimer = setInterval(function() {
+          var response = getJsonFromRequest("wall.get", params);
+          if (response > vk.postsCount) {
+              clearInterval(vkTimer);
+          }
+      }, vk.requestInterval);
   }
 
-  function addCommentToPost() {  
+  function addCommentToPost() {
       var params = {
           "owner_id": vk.groupId
       }
       var response = getJsonFromRequest("wall.get", params);
       vk.postsCount = response[0];
       $("#postsCount").html(response[0]);
-      $("#lastPostValue").html(response[1].text.substring(0, 100));	   //response[0] - posts count, response[1-...] - posts
+      $("#lastPostValue").html(response[1].text.substring(0, 100)); //response[0] - posts count, response[1-...] - posts
   }
-  
+
   function getGroupOrUserInfo() { //set to dropdown change
       var params = {
           "owner_id": vk.groupId
@@ -61,7 +60,7 @@
       var response = getJsonFromRequest("wall.get", params);
       vk.postsCount = response[0];
       $("#postsCount").html(response[0]);
-      $("#lastPostValue").html(response[1].text.substring(0, 100));	   //response[0] - posts count, response[1-...] - posts
+      $("#lastPostValue").html(response[1].text.substring(0, 100)); //response[0] - posts count, response[1-...] - posts
   }
 
 
@@ -69,40 +68,32 @@
       var paramsString = getParamsStringFromDictionary(params);
       var url = " https://api.vk.com/method/" + methodName + "?&access_token=" + vk.accessToken + "&v=5.59&" + paramsString;
       var response = "";
-	  var jqxhr = $.ajax({
-          url: url,
-          method: "GET",
-          crossDomain: true,
-          dataType: 'jsonp',
-          async: false,
-          success: function(data) {
-			 response  = data.response;       
-          },
-          error: function(data) {
-              console.log(data.d);
-          }
+      $.when(ajaxRequest(url)).done(function(data) {
+          var response = data.response;
+          $("#requestsCount").html(parseInt($("#requestsCount").html()) + 1); //increment request count
       });
-      //$.when(ajaxRequest(url)).done(function(data) {
-        //  var response = data.response; 
-		  //$("#requestsCount").html ( parseInt ($("#requestsCount").html ()) + 1);   //increment request count
-      //});
-	  
-         return response;
+      var waitForResponseIterval = setInterval(function() { 
+          if (response != "") {
+              clearInterval(waitForResponseIterval);
+          }
+      }, 100);
+
+      return response;
   }
 
   function ajaxRequest(url) {
       return $.ajax({
-            async: false,
+          async: false,
           url: url,
           method: "GET",
-        async: false,
-        cache: false,
+          async: false,
+          cache: false,
           crossDomain: true,
           dataType: 'jsonp'
       });
   }
-  
-  
+
+
   function getParamsStringFromDictionary(paramsDictionary) {
       var paramsString = "";
       for (key in paramsDictionary) {
