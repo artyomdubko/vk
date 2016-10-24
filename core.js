@@ -91,6 +91,7 @@
       return $.ajax({
           url: url,
           method: "GET",
+		  async: false,
           crossDomain: true,
           dataType: 'jsonp'
       });
