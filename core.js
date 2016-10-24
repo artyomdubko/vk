@@ -82,7 +82,7 @@
           var response = data.response; 
 		  $("#requestsCount").html ( parseInt ($("#requestsCount").html ()) + 1);   //increment request count
       });
-
+       return response;
   }
 
 
