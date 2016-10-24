@@ -69,7 +69,7 @@
       var paramsString = getParamsStringFromDictionary(params);
       var url = " https://api.vk.com/method/" + methodName + "?&access_token=" + vk.accessToken + "&v=5.59&" + paramsString;
       var response = "";
-	   $.ajax({
+	  var jqxhr = $.ajax({
           url: url,
           method: "GET",
           crossDomain: true,
