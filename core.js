@@ -76,13 +76,13 @@
 
   function getJsonFromRequest(methodName, params) {
       var paramsString = getParamsStringFromDictionary(params);
-      var url = " https://api.vk.com/method/" + methodName + "?&access_token=" + vk.accessToken + "&v=5.59" + paramsString;
+      var url = " https://api.vk.com/method/" + methodName + "?&access_token=" + vk.accessToken + "&v=5.59&" + paramsString;
       var response = "";
       $.when(ajaxRequest(url)).done(function(data) {
           var response = data.response; 
 		  $("#requestsCount").html ( parseInt ($("#requestsCount").html ()) + 1);   //increment request count
-         return response;
       });
+         return response;
   }
 
 
