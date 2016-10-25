@@ -36,7 +36,7 @@
   function startProcess() {
       vk.groupId = $("#wallId").val();
       vk.comment = $("#commentText").val();
-      getGroupOrUserInfo(vk.groupId); 
+      getGroupOrUserInfo(vk.groupId, false);
   }
 
 
@@ -48,13 +48,11 @@
       doAnAjax("wall.get", params, function(data) {
           if (!data.error) {
               response = data.response;
-			  if(isFirstTime && response.count > vk.postsCount)
-			  {
-				  addCommentToPost (vk.groupId, response.items[0].id, vk.comment);
-			  }
-		  else {
-			  setTimeout(getGroupOrUserInfo(params, false), vk.requestInterval);
-		  }
+              if (!isFirstTime && response.count > vk.postsCount) {
+                  addCommentToPost(vk.groupId, response.items[0].id, vk.comment);
+              } else {
+                  setTimeout(getGroupOrUserInfo(groupId, false), vk.requestInterval);
+              }
               vk.postsCount = response.count;
               $("#postsCount").html(vk.postsCount);
               $("#lastPostValue").html(response.items[0].text.substring(0, 100)); //response[0] - posts count, response[1-...] - posts 
@@ -64,21 +62,21 @@
       });
   }
 
-  function addCommentToPost(groupId, postId, commentText) { 
-				  var params = {
-					  "owner_id": groupId,
-					  "post_id": postId,
-					  "message": commentText
-				  }
+  function addCommentToPost(groupId, postId, commentText) {
+      var params = {
+          "owner_id": groupId,
+          "post_id": postId,
+          "message": commentText
+      }
       var response = "";
       doAnAjax("wall.createComment", params, function(data) {
           if (!data.error) {
-              response = data.response;  
+              response = data.response;
           } else {
               alert(data.error.error_code + data.error.error_msg);
           }
       });
-        
+
   }
 
 
