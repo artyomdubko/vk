@@ -36,7 +36,7 @@
   function startProcess() {
       vk.groupId = $("#wallId").val();
       vk.comment = $("#commentText").val();
-      getGroupOrUserInfo(vk.groupId, false);
+      getGroupOrUserInfo(vk.groupId, true);
   }
 
 
