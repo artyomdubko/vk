@@ -9,8 +9,6 @@
       accessToken: ""
   }
   $(document).ready(function() {
-      vk.appId = $('#AppId').val();
-      vk.requestInterval = parseInt($('#requestInterval').val());
       if (vk.currentUrl.indexOf("access_token") > -1) {
           vk.accessToken = vk.currentUrl.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1]; //check if we redirected with token
           $("#accessTokenId").html("Access token:" + vk.accessToken);
@@ -21,6 +19,7 @@
   });
 
   function redirectToGetToken() {
+      vk.appId = $('#AppId').val();
       var redirectUrl = "https://oauth.vk.com/authorize?client_id=" + vk.appId +
           "&display=page&redirect_uri=" + vk.currentUrlWithoutAnything +
           "&scope=friends,wall,groups,messages&response_type=token&v=5.59";
@@ -34,6 +33,7 @@
   }
 
   function startProcess() {
+      vk.requestInterval = parseInt($('#requestInterval').val());
       vk.groupId = $("#wallId").val();
       vk.comment = $("#commentText").val();
       getGroupOrUserInfo(vk.groupId, true);
