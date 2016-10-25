@@ -57,23 +57,15 @@
       var params = {
           "owner_id": vk.groupId
       }
-      var response = doAnAjax("wall.get", params);
+      var response = "";
+	  doAnAjax("wall.get", params, function(data) {
+          response = data;
+    });
       vk.postsCount = response[0];
       $("#postsCount").html(response[0]);
       $("#lastPostValue").html(response[1].text.substring(0, 100)); //response[0] - posts count, response[1-...] - posts
   }
-
-
-  function getJsonFromRequest(methodName, params) {
-      return $.ajax({
-          async: false,
-          url: url,
-          method: "GET",
-          async: false,
-          crossDomain: true,
-          dataType: 'jsonp'
-      });   
-  }
+ 
  
   function doAnAjax(methodName, params, callBack) {	  
       var paramsString = getParamsStringFromDictionary(params);
