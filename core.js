@@ -40,7 +40,7 @@
   }
 
 
-  function getGroupOrUserInfo(groupId) { //set to dropdown change
+  function getGroupOrUserInfo(groupId, isFirstTime) { //set to dropdown change
       var params = {
           "owner_id": groupId
       }
@@ -48,12 +48,12 @@
       doAnAjax("wall.get", params, function(data) {
           if (!data.error) {
               response = data.response;
-			  if(response.count > vk.postsCount)
+			  if(isFirstTime && response.count > vk.postsCount)
 			  {
 				  addCommentToPost (vk.groupId, response.items[0].id, vk.comment);
 			  }
 		  else {
-			  setTimeout(getGroupOrUserInfo(params), vk.requestInterval);
+			  setTimeout(getGroupOrUserInfo(params, false), vk.requestInterval);
 		  }
               vk.postsCount = response.count;
               $("#postsCount").html(vk.postsCount);
