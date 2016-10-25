@@ -82,8 +82,23 @@
         success: function(data, textStatus, xhr) { 
             return callBack( data );   
         },
-        error: function(xhr, textStatus, errorThrown) {
-            //$('.rtnMsg').html("opps: " + textStatus + " : " + errorThrown); 
+        error: function(xhr, exception) {
+            //$('.rtnMsg').html("opps: " + textStatus + " : " + errorThrown);  
+            if (xhr.status === 0) {
+                alert('Not connect.\n Verify Network.');
+            } else if (xhr.status == 404) {
+                alert('Requested page not found. [404]');
+            } else if (xhr.status == 500) {
+                alert('Internal Server Error [500].');
+            } else if (exception === 'parsererror') {
+                alert('Requested JSON parse failed.');
+            } else if (exception === 'timeout') {
+                alert('Time out error.');
+            } else if (exception === 'abort') {
+                alert('Ajax request aborted.');
+            } else {
+                alert('Uncaught Error.\n' + xhr.responseText);
+            } 
             return callBack ( myRtnA ); // return callBack() with myRtna
         }
     });
