@@ -45,7 +45,7 @@
           "owner_id": groupId
       }
       var response = "";
-      doAnAjax("wall.get", params, function(data) {
+      doAnAjax("GET", "wall.get", params, function(data) {
           if (!data.error) {
               response = data.response;
               if (!isFirstTime && response.count > vk.postsCount) {
@@ -69,7 +69,7 @@
           "message": commentText
       }
       var response = "";
-      doAnAjax("wall.createComment", params, function(data) {
+      doAnAjax("POST", "wall.createComment", params, function(data) {
           if (!data.error) {
               response = data.response;
           } else {
@@ -80,7 +80,7 @@
   }
 
 
-  function doAnAjax(methodName, params, callBack) {
+  function doAnAjax(type, methodName, params, callBack) {
       var paramsString = getParamsStringFromDictionary(params);
       var newUrl = " https://api.vk.com/method/" + methodName + "?&access_token=" + vk.accessToken + "&v=5.59&" + paramsString;
       var response = "";
@@ -88,7 +88,7 @@
       $.ajax({
           async: false,
           url: newUrl,
-          method: methodName,
+          method: type,
           async: false,
           crossDomain: true,
           dataType: 'jsonp',
