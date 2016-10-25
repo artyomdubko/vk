@@ -50,10 +50,16 @@
       }
       var response = "";
 	  doAnAjax("wall.get", params, function(data) {
-          response = data.response;
+		  if (!data.error)
+		  {
+       response = data.response;
       vk.postsCount = response.count;
       $("#postsCount").html(vk.postsCount);
       $("#lastPostValue").html(response.items[0].text.substring(0, 100)); //response[0] - posts count, response[1-...] - posts
+		  }
+		  else {
+			    alert(data.error.error_code + data.error.error_msg);
+		  }
     });
   }
   function addCommentToPost() {
