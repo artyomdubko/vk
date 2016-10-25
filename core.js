@@ -43,6 +43,19 @@
       }, vk.requestInterval);
   }
 
+
+  function getGroupOrUserInfo() { //set to dropdown change
+      var params = {
+          "owner_id": vk.groupId
+      }
+      var response = "";
+	  doAnAjax("wall.get", params, function(data) {
+          response = data.response;
+      vk.postsCount = response.count;
+      $("#postsCount").html(vk.postsCount);
+      $("#lastPostValue").html(response.items[0].text.substring(0, 100)); //response[0] - posts count, response[1-...] - posts
+    });
+  }
   function addCommentToPost() {
       var params = {
           "owner_id": vk.groupId
@@ -51,19 +64,6 @@
       vk.postsCount = response[0];
       $("#postsCount").html(response[0]);
       $("#lastPostValue").html(response[1].text.substring(0, 100)); //response[0] - posts count, response[1-...] - posts
-  }
-
-  function getGroupOrUserInfo() { //set to dropdown change
-      var params = {
-          "owner_id": vk.groupId
-      }
-      var response = "";
-	  doAnAjax("wall.get", params, function(data) {
-          response = data;
-      vk.postsCount = response.count;
-      $("#postsCount").html(vk.postsCount);
-      $("#lastPostValue").html(response.items[0].text.substring(0, 100)); //response[0] - posts count, response[1-...] - posts
-    });
   }
  
  
