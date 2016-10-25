@@ -95,7 +95,7 @@
             return callBack ( myRtnA ); // return callBack() with myRtna
         }
     });
-   
+   }
 
   function getParamsStringFromDictionary(paramsDictionary) {
       var paramsString = "";
