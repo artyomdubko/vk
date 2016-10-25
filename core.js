@@ -50,8 +50,8 @@
               response = data.response;
               if (!isFirstTime && response.count > vk.postsCount) {
                   addCommentToPost(vk.groupId, response.items[0].id, vk.comment);
-              } else {
-                  setTimeout(getGroupOrUserInfo(groupId, false), vk.requestInterval);
+              } else { 
+                  setTimeout(function (){getGroupOrUserInfo(groupId, false)}, vk.requestInterval);
               }
               vk.postsCount = response.count;
               $("#postsCount").html(vk.postsCount);
