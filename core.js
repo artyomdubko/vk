@@ -23,7 +23,7 @@
   function redirectToGetToken() {
       var redirectUrl = "https://oauth.vk.com/authorize?client_id=" + vk.appId +
           "&display=page&redirect_uri=" + vk.currentUrlWithoutAnything +
-          "&scope=friends,wall,groups&response_type=token&v=5.59";
+          "&scope=friends,wall,groups,messages&response_type=token&v=5.59";
       window.location.replace(redirectUrl);
   }
 
