@@ -10,7 +10,7 @@
   }
   $(document).ready(function() {
       vk.appId = $('#AppId').val();
-      vk.requestInterval = $('#requestInterval').val();
+      vk.requestInterval = parseInt($('#requestInterval').val());
       if (vk.currentUrl.indexOf("access_token") > -1) {
           vk.accessToken = vk.currentUrl.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1]; //check if we redirected with token
           $("#accessTokenId").html("Access token:" + vk.accessToken);
