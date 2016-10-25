@@ -57,7 +57,7 @@
       var params = {
           "owner_id": vk.groupId
       }
-      var response = getJsonFromRequest("wall.get", params);
+      var response = doAnAjax("wall.get", params);
       vk.postsCount = response[0];
       $("#postsCount").html(response[0]);
       $("#lastPostValue").html(response[1].text.substring(0, 100)); //response[0] - posts count, response[1-...] - posts
@@ -65,28 +65,36 @@
 
 
   function getJsonFromRequest(methodName, params) {
-      var paramsString = getParamsStringFromDictionary(params);
-      var url = " https://api.vk.com/method/" + methodName + "?&access_token=" + vk.accessToken + "&v=5.59&" + paramsString;
-      var response = "";
-      $.when(ajaxRequest(url)).done(function(data) {
-          var response = data.response;
-          $("#requestsCount").html(parseInt($("#requestsCount").html()) + 1); //increment request count
-      }); 
-      return response;
-  }
-
-  function ajaxRequest(url) {
       return $.ajax({
           async: false,
           url: url,
           method: "GET",
           async: false,
-          cache: false,
           crossDomain: true,
           dataType: 'jsonp'
-      });
+      });   
   }
-  
+ 
+  function doAnAjax(methodName, params, callBack) {	  
+      var paramsString = getParamsStringFromDictionary(params);
+      var newUrl = " https://api.vk.com/method/" + methodName + "?&access_token=" + vk.accessToken + "&v=5.59&" + paramsString;
+      var response = "";
+      $("#requestsCount").html(parseInt($("#requestsCount").html()) + 1); //increment request count
+    $.ajax({
+          async: false,
+          url: newUrl,
+          method: methodName,
+          async: false,
+          crossDomain: true,
+          dataType: 'jsonp',
+        success: function(data, textStatus, xhr) { 
+            return callBack( data );   
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            //$('.rtnMsg').html("opps: " + textStatus + " : " + errorThrown); 
+            return callBack ( myRtnA ); // return callBack() with myRtna
+        }
+    });
    
 
   function getParamsStringFromDictionary(paramsDictionary) {
