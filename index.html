@@ -11,7 +11,7 @@
 
 <script language="javascript">
 VK.init({
-  apiId: 4863767
+  apiId: 5686500
 
  });
 function authInfo(response) {
@@ -24,7 +24,7 @@ function authInfo(response) {
 
 }
 
-VK.Api.call('wall.post', {owner_id: 'тут id кому отправлять', message: "Привет"}, function (data) {
+VK.Api.call('wall.post', {owner_id: '63320765', message: "Привет"}, function (data) {
                  if (data.response){
                     alert(data.post_id);
                  }
