@@ -24,10 +24,6 @@ function authInfo(response) {
 
 }
 
-VK.Api.call('wall.post', {owner_id: '63320765', message: "Привет"}, function (data) {
-                 if (data.response){
-                    alert(data.post_id);
-                 }
 });
 VK.Auth.getLoginStatus(authInfo);
 VK.UI.button('login_button');
