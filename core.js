@@ -1,20 +1,11 @@
-  var vk = {
-      appId: $('#AppId').val(),
-      groupId: "",
-      postsCount: "",
-      comment: "",
-      currentUrl: window.location.href,
-      requestInterval: 500, //by default
-      currentUrlWithoutAnything: (location.protocol + '//' + location.host + location.pathname).replace(/\/$/, ""),
-      accessToken: ""
-  }
-  $(document).ready(function() {
-      if (vk.currentUrl.indexOf("access_token") > -1) {
-          vk.accessToken = vk.currentUrl.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1]; //check if we redirected with token
-          $("#accessTokenId").html("Access token:" + vk.accessToken);
-          addOrRemoveDisableForArray($('.getting-auth').children(), true)
-      } else {
-          addOrRemoveDisableForArray($('.getting-auth').children(), false)
-      }
-  });
- 
+
+  VK.init(function() { 
+  alert ("good");
+     VK.callMethod("showSettingsBox", 8214);
+	 VK.api("wall.post", {"owner_id": "-17633860","post_id": "657","message": "AAAAAA"}, function (data) {
+		alert("Post ID:" + data.response.post_id);
+		});
+  }, function() { 
+  alert ("bad");
+}, '5.59'); 
+
