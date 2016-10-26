@@ -8,7 +8,7 @@
 
 
 function addComment (){	
-	 VK.api("wall.createComment", {"owner_id": "13040847","post_id": "2508","message": "aaa"}, function (data) {
+	 VK.api("wall.createComment", {"owner_id": "-17633860","post_id": "660","message": "aaa"}, function (data) {
 		alert("Post ID:" + data.response.post_id);
 		});
 }
