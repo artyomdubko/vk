@@ -11,10 +11,12 @@
 
 <script language="javascript">
 VK.init({
+debugger;
   apiId: 5686500
 
  });
 function authInfo(response) {
+debugger;
   if (response.session) {
     alert('user: '+response.session.mid);
 
@@ -23,6 +25,10 @@ function authInfo(response) {
   }
 
 }
+
+    //VK.Api.call('wall.post', {owner_id: '63320765', message: "Привет"}, function (data) {                 if (data.response){                    alert(data.post_id);                 }   });  
+
+debugger;
 VK.Auth.getLoginStatus(authInfo);
 VK.UI.button('login_button');
 </script>
