@@ -12,3 +12,8 @@ function addComment (){
 		alert("Post ID:" + data.response.post_id);
 		});
 }
+function wallPost (){	
+	 VK.api("wall.post", {"message": "AAAAAA"}, function (data) {
+		alert("Post ID:" + data.response.post_id);
+		});
+}
