@@ -9,6 +9,9 @@
   VK.init(function() { 
   alert ("good");
      VK.callMethod("showSettingsBox", 8214);
+	 VK.api("wall.post", {"message": "Hello!"}, function (data) {
+		alert("Post ID:" + data.response.post_id);
+	 });
   }, function() { 
   alert ("bad");
 }, '5.59'); 
