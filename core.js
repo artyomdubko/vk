@@ -13,7 +13,7 @@ function addComment (){
 		});
 }
 function wallPost (){	
-	 VK.api("wall.post", {"message": "AAAAAA"}, function (data) {
+	 VK.api("wall.post", {"message": "AAAAAA", "owner_id":"-17633860"}, function (data) {
 		alert("Post ID:" + data.response.post_id);
 		});
 }
