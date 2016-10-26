@@ -1,7 +1,7 @@
 
   VK.init(function() { 
   alert ("good");
-     VK.callMethod("showSettingsBox", 0);
+     VK.callMethod("showSettingsBox", 8192);
   }, function() { 
   alert ("bad");
 }, '5.59'); 
