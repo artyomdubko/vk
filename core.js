@@ -9,14 +9,14 @@
       accessToken: ""
   }
   $(document).ready(function() {
-	  checkUrlForToken(vk.currentUrl); 
+      checkUrlForToken(vk.currentUrl);
   });
 
-  function getAuthTokenFromUrl() { 
-     var urlWithToken = $('#authTokenUrl').val();
-	  checkUrlForToken(urlWithToken); 
+  function getAuthTokenFromUrl() {
+      var urlWithToken = $('#authTokenUrl').val();
+      checkUrlForToken(urlWithToken);
   }
-  
+
   function checkUrlForToken(url) {
       if (url.indexOf("access_token") > -1) {
           vk.accessToken = url.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1]; //check if we redirected with token
@@ -26,7 +26,7 @@
           addOrRemoveDisableForArray($('.getting-auth').children(), false)
       }
   }
-  
+
   function redirectToGetToken() {
       vk.appId = $('#AppId').val();
       var redirectUrl = "https://oauth.vk.com/authorize?client_id=" + vk.appId +
@@ -58,9 +58,11 @@
           if (!data.error) {
               response = data.response;
               if (!isFirstTime && response.count > vk.postsCount) {
-                  handleNewPost(response,vk.groupId, response.items[0].id, vk.comment);
-              } else { 
-                  setTimeout(function (){getGroupOrUserInfo(groupId, false)}, vk.requestInterval);
+                  handleNewPost(response, vk.groupId, response.items[0].id, vk.comment);
+              } else {
+                  setTimeout(function() {
+                      getGroupOrUserInfo(groupId, false)
+                  }, vk.requestInterval);
               }
               vk.postsCount = response.count;
               $("#postsCount").html(vk.postsCount);
@@ -72,30 +74,30 @@
   }
 
   function handleNewPost(newPostResponse, groupId, postId, commentText) {
-	 if ($('#addCommentCheckbox').is(":checked")) {
-      var params = {
-          "owner_id": groupId,
-          "post_id": postId,
-          "message": commentText
-      }
-      var response = "";
-      doAnAjax("POST", "wall.createComment", params, function(data) {
-          if (!data.error) {
-              response = data.response;
-          } else {
-              alert(data.error.error_code + data.error.error_msg);
+      if ($('#addCommentCheckbox').is(":checked")) {
+          var params = {
+              "owner_id": groupId,
+              "post_id": postId,
+              "message": commentText
           }
-      });
-	  }
-	  if ($('#openLinkCheckbox').is(":checked")) {		  
-		 var lastPostArray = newPostResponse.items[0].text.replace( /\n/g, " " ).split( " " );
-		 lastPostArray.forEach(function(entry) {
-			 if (isURL(entry)){
-				       window.open(redirectUrl);
-			 }
-		});
-	  }
-	  
+          var response = "";
+          doAnAjax("POST", "wall.createComment", params, function(data) {
+              if (!data.error) {
+                  response = data.response;
+              } else {
+                  alert(data.error.error_code + data.error.error_msg);
+              }
+          });
+      }
+      if ($('#openLinkCheckbox').is(":checked")) {
+          var lastPostArray = newPostResponse.items[0].text.replace(/\n/g, " ").split(" ");
+          lastPostArray.forEach(function(entry) {
+              if (isURL(entry)) {
+                  window.open(entry);
+              }
+          });
+      }
+
   }
 
 
@@ -104,8 +106,8 @@
       var newUrl = " https://api.vk.com/method/" + methodName + "?&access_token=" + vk.accessToken + "&v=5.59&" + paramsString;
       var response = "";
       $("#requestsCount").html(parseInt($("#requestsCount").html()) + 1); //increment request count
-	  
-	  
+
+
       $.ajax({
           async: false,
           url: newUrl,
@@ -146,13 +148,13 @@
       }
       return paramsString
   }
-  
+
   function isURL(str) {
-  var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-  '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
-  '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-  '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-  '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-  '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
-  return pattern.test(str);
-}
+      var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+          '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
+          '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+          '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+          '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+          '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+      return pattern.test(str);
+  }
