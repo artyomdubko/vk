@@ -9,6 +9,18 @@
       accessToken: ""
   }
   $(document).ready(function() {
+	  
+	  var demo=new Console({
+            'element':'#debug',
+            'width':420,
+            'height':310,
+            'bg':'#fafafa'
+        });
+demo.log('Initialized!');
+demo.success('Success!');
+demo.error('Error!');
+demo.warning('Warning!');
+
       checkUrlForToken(vk.currentUrl);
   });
 
