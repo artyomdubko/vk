@@ -13,7 +13,7 @@ the Software, and to permit persons to whom the Software is furnished to do so,
 subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+copies or substantial portions of the Softwaref.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
@@ -53,15 +53,15 @@ Console.prototype.applyCss=function(){
 Console.prototype.addSearchInput=function(){
 
     var self = this;
-    $(this.element).append('<input name="JC_query" id="JC_query" type="text" size="30" maxlength="30"><input id="JC_searchit" type="button" value="Search">');
+    //$(this.element).append('<input name="JC_query" id="JC_query" type="text" size="30" maxlength="30"><input id="JC_searchit" type="button" value="Search">');
 
     $(this.element).append('<div id="JC_consoleDiv"></div>');
 
-    $('#JC_query').css({
-        "border" : this.search_border,
-        "background-color" : this.search_bg,
-        "color":this.search_color
-    });
+   // $('#JC_query').css({
+     //   "border" : this.search_border,
+     //   "background-color" : this.search_bg,
+     //   "color":this.search_color
+   // });
     
     $('#JC_searchit').css({
         "border" : this.search_btn_border,
@@ -74,11 +74,11 @@ Console.prototype.addSearchInput=function(){
 
     });
 
-    $("#JC_query").keyup(function(event){
-        if(event.keyCode == 13){
-            $("#JC_searchit").click();
+   // $("#JC_query").keyup(function(event){
+      //  if(event.keyCode == 13){
+        //    $("#JC_searchit").click();
         }
-    });
+    //});
 
     var style = document.createElement('style');
     style.type = 'text/css';
@@ -91,7 +91,7 @@ Console.prototype.addSearchInput=function(){
 
 Console.prototype.highlightSearch=function(){
 
-    var text = $("#JC_query").val();
+    //var text = $("#JC_query").val();
     if(text!="")
     {
         var query = new RegExp("(\\b" + text + "\\b)", "gim");
