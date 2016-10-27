@@ -18,7 +18,7 @@
   }
   
   function checkUrlForToken(url) {
-      if (url("access_token") > -1) {
+      if (url.indexOf("access_token") > -1) {
           vk.accessToken = url.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1]; //check if we redirected with token
           $("#accessTokenId").html("Access token:" + vk.accessToken);
           addOrRemoveDisableForArray($('.getting-auth').children(), true)
