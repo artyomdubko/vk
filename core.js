@@ -58,7 +58,7 @@
           if (!data.error) {
               response = data.response;
               if (!isFirstTime && response.count > vk.postsCount) {
-                  addCommentToPost(vk.groupId, response.items[0].id, vk.comment);
+                  handleNewPost(response,vk.groupId, response.items[0].id, vk.comment);
               } else { 
                   setTimeout(function (){getGroupOrUserInfo(groupId, false)}, vk.requestInterval);
               }
@@ -71,7 +71,8 @@
       });
   }
 
-  function addCommentToPost(groupId, postId, commentText) {
+  function handleNewPost(newPostResponse, groupId, postId, commentText) {
+	 if ($('#addCommentCheckbox').is(":checked")) {
       var params = {
           "owner_id": groupId,
           "post_id": postId,
@@ -85,7 +86,16 @@
               alert(data.error.error_code + data.error.error_msg);
           }
       });
-
+	  }
+	  if ($('#openLinkCheckbox').is(":checked")) {		  
+		 var lastPostArray = newPostResponse.items[0].text.replace( /\n/g, " " ).split( " " );
+		 lastPostArray.forEach(function(entry) {
+			 if (isURL(entry)){
+				       window.open(redirectUrl);
+			 }
+		});
+	  }
+	  
   }
 
 
@@ -136,3 +146,13 @@
       }
       return paramsString
   }
+  
+  function isURL(str) {
+  var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+  '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
+  '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+  '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+  '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+  '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+  return pattern.test(str);
+}
