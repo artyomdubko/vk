@@ -32,7 +32,7 @@
       var redirectUrl = "https://oauth.vk.com/authorize?client_id=" + vk.appId +
           "&display=page&redirect_uri=https://oauth.vk.com/blank.html" +
           "&scope=friends,wall,groups,messages&response_type=token&v=5.59";
-      window.location.replace(redirectUrl);
+      window.open(redirectUrl);
   }
 
   function addOrRemoveDisableForArray(array, choise) { //choise - bool 
