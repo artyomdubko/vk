@@ -9,6 +9,15 @@
       accessToken: ""
   }
   $(document).ready(function() {
+	  checkUrlForToken(vk.currentUrl); 
+  });
+
+  function getAuthTokenFromUrl() { 
+     var urlWithToken = $('#authTokenUrl').val();
+	  checkUrlForToken(urlWithToken); 
+  }
+  
+  function checkUrlForToken(url) {
       if (vk.currentUrl.indexOf("access_token") > -1) {
           vk.accessToken = vk.currentUrl.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1]; //check if we redirected with token
           $("#accessTokenId").html("Access token:" + vk.accessToken);
@@ -16,8 +25,8 @@
       } else {
           addOrRemoveDisableForArray($('.getting-auth').children(), false)
       }
-  });
-
+  }
+  
   function redirectToGetToken() {
       vk.appId = $('#AppId').val();
       var redirectUrl = "https://oauth.vk.com/authorize?client_id=" + vk.appId +
