@@ -77,7 +77,7 @@ Console.prototype.addSearchInput=function(){
    // $("#JC_query").keyup(function(event){
       //  if(event.keyCode == 13){
         //    $("#JC_searchit").click();
-        }
+      //  }
     //});
 
     var style = document.createElement('style');

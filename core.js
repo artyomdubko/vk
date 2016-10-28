@@ -8,7 +8,7 @@
       currentUrlWithoutAnything: (location.protocol + '//' + location.host + location.pathname).replace(/\/$/, ""),
       accessToken: ""
   }
-  vart started = false;
+  var started = false;
   $(document).ready(function() {
 
       var demo = new Console({
@@ -60,11 +60,11 @@
 		  vk.groupId = $("#wallId").val();
 		  vk.comment = $("#commentText").val();
 		  getGroupOrUserInfo(vk.groupId, true);
-		  $("#startButton").prop('value', 'Stop');
+		  $("#startButton").html('Stop');
 		  started = true;
 	  }
 	  else {
-		  $("#startButton").prop('value', 'Start');
+		  $("#startButton").html('Start');
 		  started = false;		  
 	  }
   }
