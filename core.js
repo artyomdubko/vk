@@ -12,7 +12,12 @@
    var demo;
   $(document).ready(function() {
      $( document ).tooltip();
-      demo = new Console();
+      demo = new Console({
+          'element': '#debug',
+          'width': 420,
+          'height': 400,
+          'bg': '#fafafa'
+      });
       demo.log('Initialized!');
       demo.success('Success!');
       demo.error('Error!');
