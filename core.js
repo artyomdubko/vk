@@ -9,14 +9,10 @@
       accessToken: ""
   }
   var started = false;
+   var demo;
   $(document).ready(function() {
-
-      var demo = new Console({
-          'element': '#debug',
-          'width': 420,
-          'height': 310,
-          'bg': '#fafafa'
-      });
+     $( document ).tooltip();
+      demo = new Console();
       demo.log('Initialized!');
       demo.success('Success!');
       demo.error('Error!');

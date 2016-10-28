@@ -8,34 +8,35 @@
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
     <script src="./core.js"></script>
     <script src="./jquery.console.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles.css">
 </head>
 
 <body>
     <div class="row">
         <div class="col-md-6" style="background-black;">
-		
+
             <div class="getting-auth">
                 <input type="text" id="AppId" value="4753143" /><br><br>
                 <button onclick="redirectToGetToken()">Get auth token</button>
+                <img src="question-icon.png" title="sdfdsf" class="question-icon">
             </div>
-			
-			<div class="getting-auth">
-            <input type="text" id="authTokenUrl" value="" /><br><br> <br>
-            <button onclick="getAuthTokenFromUrl()">Get auth token from url</button>	
-            <p id=accessTokenId>Access token: -.</p>		
+
+            <div class="getting-auth-from-url">
+                <input type="text" id="authTokenUrl" value="" /><br><br> <br>
+                <button onclick="getAuthTokenFromUrl()">Get auth token from url</button>
+                <p id=accessTokenId>Access token: -.</p>
             </div>
-			
-            <p>Request interval, ms:</p><input type="number" id="requestInterval" value="500" min="100" />
-            <br>
-            <br>
+
+            <p>Request interval, ms:</p><input type="number" id="requestInterval" value="500" min="100" /> 
             <input type="text" id="wallId" name="product" list="ids" />
             <datalist id="ids">
-    <option value="-38010791">mzgb</option>
-    <option value="-17633860">test</option>
-    <option value="-92868471">pubquiz</option>
-</datalist>
-            <button onclick="startProcess()" id="startButton" > Start</button>	
+				<option value="-38010791">mzgb</option>
+				<option value="-17633860">test</option>
+				<option value="-92868471">pubquiz</option>
+			</datalist>
+            <button onclick="startProcess()" id="startButton"> Start</button>
             <p>Posts count:</p>
             <p id=postsCount> - </p>
             <p>Last post:</p>
