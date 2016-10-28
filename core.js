@@ -8,18 +8,19 @@
       currentUrlWithoutAnything: (location.protocol + '//' + location.host + location.pathname).replace(/\/$/, ""),
       accessToken: ""
   }
+  vart started = false;
   $(document).ready(function() {
-	  
-	  var demo=new Console({
-            'element':'#debug',
-            'width':420,
-            'height':310,
-            'bg':'#fafafa'
-        });
-demo.log('Initialized!');
-demo.success('Success!');
-demo.error('Error!');
-demo.warning('Warning!');
+
+      var demo = new Console({
+          'element': '#debug',
+          'width': 420,
+          'height': 310,
+          'bg': '#fafafa'
+      });
+      demo.log('Initialized!');
+      demo.success('Success!');
+      demo.error('Error!');
+      demo.warning('Warning!');
 
       checkUrlForToken(vk.currentUrl);
   });
@@ -54,10 +55,18 @@ demo.warning('Warning!');
   }
 
   function startProcess() {
-      vk.requestInterval = parseInt($('#requestInterval').val());
-      vk.groupId = $("#wallId").val();
-      vk.comment = $("#commentText").val();
-      getGroupOrUserInfo(vk.groupId, true);
+	  if (!started){
+		  vk.requestInterval = parseInt($('#requestInterval').val());
+		  vk.groupId = $("#wallId").val();
+		  vk.comment = $("#commentText").val();
+		  getGroupOrUserInfo(vk.groupId, true);
+		  $("#startButton").prop('value', 'Stop');
+		  started = true;
+	  }
+	  else {
+		  $("#startButton").prop('value', 'Start');
+		  started = false;		  
+	  }
   }
 
 
@@ -72,9 +81,11 @@ demo.warning('Warning!');
               if (!isFirstTime && response.count > vk.postsCount) {
                   handleNewPost(response, vk.groupId, response.items[0].id, vk.comment);
               } else {
-                  setTimeout(function() {
-                      getGroupOrUserInfo(groupId, false)
-                  }, vk.requestInterval);
+				  if (started){            //check if started clicked
+					  setTimeout(function() {
+						  getGroupOrUserInfo(groupId, false)
+					  }, vk.requestInterval);
+				  }
               }
               vk.postsCount = response.count;
               $("#postsCount").html(vk.postsCount);
@@ -161,7 +172,7 @@ demo.warning('Warning!');
       return paramsString
   }
 
-  function isURL(str) { 
-   var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-   return regexp.test(str);
-} 
+  function isURL(str) {
+      var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+      return regexp.test(str);
+  }

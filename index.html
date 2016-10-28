@@ -12,46 +12,51 @@
 </head>
 
 <body>
-<div class="row">
-    <div class="col-md-6" style="background-black;">
-        <div class="getting-auth">
-            <input type="text" id="AppId" value="4753143" /><br><br>
-            <button onclick="redirectToGetToken()">Get auth token</button>
-        </div>
-        <input type="text" id="authTokenUrl" value="" /><br><br> <br>
-        <button onclick="getAuthTokenFromUrl()">Get auth token from url</button>
-        <p id=accessTokenId>Access token: -.</p>
-        <p>Request interval, ms:</p><input type="number" id="requestInterval" value="500" min="100" />
-        <br>
-        <br>
-        <input type="text" id="wallId" name="product" list="ids" />
-        <datalist id="ids">
+    <div class="row">
+        <div class="col-md-6" style="background-black;">
+		
+            <div class="getting-auth">
+                <input type="text" id="AppId" value="4753143" /><br><br>
+                <button onclick="redirectToGetToken()">Get auth token</button>
+            </div>
+			
+			<div class="getting-auth">
+            <input type="text" id="authTokenUrl" value="" /><br><br> <br>
+            <button onclick="getAuthTokenFromUrl()">Get auth token from url</button>	
+            <p id=accessTokenId>Access token: -.</p>		
+            </div>
+			
+            <p>Request interval, ms:</p><input type="number" id="requestInterval" value="500" min="100" />
+            <br>
+            <br>
+            <input type="text" id="wallId" name="product" list="ids" />
+            <datalist id="ids">
     <option value="-38010791">mzgb</option>
     <option value="-17633860">test</option>
     <option value="-92868471">pubquiz</option>
 </datalist>
-        <button onclick="startProcess()">Start Process!</button>
-        <p>Posts count:</p>
-        <p id=postsCount> - </p>
-        <p>Last post:</p>
-        <p id=lastPostValue> - </p><br>
-        <p>Requests count:</p>
-        <p id=requestsCount> 0 </p><br>
+            <button onclick="startProcess()" id="startButton" value="Start"/> 
+            <p>Posts count:</p>
+            <p id=postsCount> - </p>
+            <p>Last post:</p>
+            <p id=lastPostValue> - </p><br>
+            <p>Requests count:</p>
+            <p id=requestsCount> 0 </p><br>
 
 
-        <div class="adding-parameters-area">
-            <div class="comments-area">
-                <input type="checkbox" id="addCommentCheckbox"> Add comment<br>
-                <input type="text" id="commentText" value='Сборная Тринидада' /><br>
-                <input type="number" id="commentsCount" min="1" max="10" value="1" /><br>
-            </div>
-            <div class="open-link-area">
-                <input type="checkbox" id="openLinkCheckbox">Open link<br>
+            <div class="adding-parameters-area">
+                <div class="comments-area">
+                    <input type="checkbox" id="addCommentCheckbox"> Add comment<br>
+                    <input type="text" id="commentText" value='Сборная Тринидада' /><br>
+                    <input type="number" id="commentsCount" min="1" max="10" value="1" /><br>
+                </div>
+                <div class="open-link-area">
+                    <input type="checkbox" id="openLinkCheckbox">Open link<br>
+                </div>
             </div>
         </div>
-    </div>
-    <div id='debug' class="col-md-6">
-	</div>
+        <div id='debug' class="col-md-6">
+        </div>
     </div>
 
     </div>
