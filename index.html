@@ -15,59 +15,97 @@
 
 <body>
     <div class="row">
-	     <div class="col-md-3"></div>
-        <div class="col-md-3" style="background-black;">
-
-            <div class="getting-auth row">
-                <!--<input type="text" id="AppId" value="4753143" /> -->
-                <button onclick="redirectToGetToken()">Get auth token</button>
-                <img src="question-icon.png" title="sdfdsf" class="question-icon">
-            </div>
-
-            <div class="getting-auth-from-url">
-                <input type="text" id="authTokenUrl" value="" /><br><br> <br>
-                <button onclick="getAuthTokenFromUrl()">Get auth token from url</button>
-                <p id=accessTokenId>Access token: <p style="color:red;">НЕТУ</p>.</p>
-            </div>
-
-            <div class="">
-                <div class="group-info-wrapper">
-                    <div class="interval-wrapper">
-                        <p>Request interval, ms:</p><input type="number" id="requestInterval" value="500" min="100" />
-                    </div>
-                    <input type="text" id="wallId" name="product" list="ids" />
-                    <datalist id="ids">
+        <div class="col-md-3"></div>
+        <div class="col-md-4" style="background-black;">
+            <!--<input type="text" id="AppId" value="4753143" /> -->
+            <table class="params-table rcorners">
+                <tr>
+                    <th   colspan="2" > <button class="buttons-center"onclick="redirectToGetToken()">Get auth token</button> </th> 
+                    <th> <img src="question-icon.png" title="sdfdsf" class="question-icon"></th>
+                </tr>
+                <tr>
+                    <th> <input type="text" id="authTokenUrl" value="" /> </th>
+                    <th> <button  onclick="getAuthTokenFromUrl()">Get auth token from url</button> </th>
+                </tr>
+                <tr>
+                    <th>
+                        <p>Access token:</p>
+                    </th>
+                    <th>
+                        <p id=accessTokenIdstyle="color:red;">НЕТУ</p>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <p>Request interval, ms:</p>
+                    </th>
+                    <th> <input type="number" id="requestInterval" value="500" min="100" /></th>
+                </tr>
+                <tr>
+                    <th>
+                        <p>Group id:</p>
+                    </th>
+                    <th> <input type="text" id="wallId" name="product" list="ids" />
+                        <datalist id="ids">
 					<option value="-38010791">mzgb</option>
 					<option value="-17633860">test</option>
 					<option value="-92868471">pubquiz</option>
 				</datalist>
-                </div>
-                <button onclick="startProcess()" id="startButton"> Start</button>
+                    </th>
+                </tr>
+                <tr>
+                    <th> <input type="checkbox" id="addCommentCheckbox"> Add comment </th>
+                    <th> <input type="checkbox" id="openLinkCheckbox"> Open link<br></th>
+                </tr>
+                <tr>
+                    <th>
+                        <p>Comment:</p>
+                    </th>
+                    <th> <input type="text" id="commentText" value='Сборная Тринидада' /> </th>
+                </tr>
+                <tr>
+                    <th>
+                        <p>Comment count:</p>
+                    </th>
+                    <th> <input type="number" id="commentsCount" min="1" max="10" value="1" /> </th>
+                </tr>
+                <tr>
+                    <th colspan="2"> <button class="buttons-center" onclick="startProcess()" id="startButton"> Start</button> </th>
+                </tr>
+                <tr>
+                    <th>
+                        <p>Posts count:</p>
+                    </th>
+                    <th>
+                        <p id=postsCount> - </p>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <p>Last post:</p>
+                    </th>
+                    <th>
+                        <p id=lastPostValue> - </p>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <p>Requests count:</p>
+                    </th>
+                    <th>
+                        <p id=requestsCount> 0 </p>
+                    </th>
+                </tr>
+            </table>
 
-            </div>
-
-            <div class="adding-parameters-area">
-                <div class="comments-area">
-                    <input type="checkbox" id="addCommentCheckbox"> Add comment<br>
-                    <input type="text" id="commentText" value='Сборная Тринидада' /><br>
-                    <input type="number" id="commentsCount" min="1" max="10" value="1" /><br>
-                </div>
-                <div class="open-link-area">
-                    <input type="checkbox" id="openLinkCheckbox">Open link<br>
-                </div>
-            </div>
-            <div class="group-response-wrapper">
-                <p>Posts count:</p>
-                <p id=postsCount> - </p>
-                <p>Last post:</p>
-                <p id=lastPostValue> - </p><br>
-                <p>Requests count:</p>
-                <p id=requestsCount> 0 </p><br>
-            </div>
         </div>
-        <div id='debug' class="col-md-3"> </div>
-		 <div class="col-md-3"></div>
-       
+
+
+
+
+        <div id='debug' class="col-md-3 rcorners"> </div>
+        <div class="col-md-2"></div>
+
     </div>
 
     </div>

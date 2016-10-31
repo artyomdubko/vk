@@ -1,3 +1,26 @@
 .question-icon{
-  width:5%;
+  width:25%;
+}
+.access-token p, .interval-wrapper p{ 
+ display: inline-block;
+} 
+.params-table{
+	width:100%;
+	border-collapse:separate; 
+	border-spacing:1em;
+}
+
+.buttons-center{	
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+}
+
+.rcorners {
+    border-radius: 25px;
+    border: 2px solid #73AD21;
+    padding: 20px;
+    width: 200px;
+    height: 150px;
 }
