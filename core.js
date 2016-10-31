@@ -1,4 +1,4 @@
-  var vk = {
+﻿  var vk = {
       appId: 4753143,
       groupId: "",
       postsCount: "",
@@ -16,7 +16,7 @@
           'element': '#debug',
           'width': 420,
           'height': 400,
-          'bg': '#fafafa'
+          'bg': '#f9ebd2'
       });
       demo.log('Initialized!');
       demo.success('Success!');
