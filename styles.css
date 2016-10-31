@@ -31,8 +31,9 @@ body {
     height: 150px;
 }
 
-.table-wrapper{
-   margin-right: 5%;
+.col-md-2, .col-md-3,
+.col-md-4{
+   margin: 0 2%;
 }
 
 .row {
