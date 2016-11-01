@@ -14,8 +14,8 @@
       $(document).tooltip();
       demo = new Console({
           'element': '#debug',
-          'width': 420,
-          'height': 400,
+          'width': 500,
+          'height': 475,
           'bg': '#f9ebd2'
       });
       demo.log('Initialized!');

@@ -2,6 +2,8 @@
 body {
     background-image: url("bcg.jpg");
     background-repeat: repeat;
+    
+    
 }
 
 .question-icon{
@@ -11,7 +13,7 @@ body {
  display: inline-block;
 } 
 .params-table{
-	width:100%;
+	width:90%;
 	border-collapse:separate; 
 	border-spacing:7px;
     	background-color: #f9ebd2;
@@ -27,15 +29,14 @@ body {
 .rcorners {
     border-radius: 25px;
     border: 2px solid #73AD21;
-    padding: 20px; 
-    height: 150px;
+    padding: 20px !important; 
 }
-
-.col-md-2, .col-md-3,
-.col-md-4{
-   margin: 0 2%;
-}
+ 
 
 .row {
     margin-top: 1%;
+}
+
+#debug{ 
+    width: 90% !important;
 }

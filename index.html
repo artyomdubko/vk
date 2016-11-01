@@ -15,17 +15,17 @@
 
 <body>
     <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-4" >
+        <div class="col-md-1 col-lg-2"></div>
+        <div class="col-sm-7 col-md-6 col-lg-4">
             <!--<input type="text" id="AppId" value="4753143" /> -->
             <table class="params-table rcorners">
                 <tr>
-                    <th   colspan="2" > <button class="buttons-center"onclick="redirectToGetToken()">Get auth token</button> </th> 
+                    <th colspan="2"> <button class="buttons-center" onclick="redirectToGetToken()">Get auth token</button> </th>
                     <th> <img src="question-icon.png" title="sdfdsf" class="question-icon"></th>
                 </tr>
                 <tr>
                     <th> <input type="text" id="authTokenUrl" value="" /> </th>
-                    <th> <button  onclick="getAuthTokenFromUrl()">Get auth token from url</button> </th>
+                    <th> <button onclick="getAuthTokenFromUrl()">Get auth token from url</button> </th>
                 </tr>
                 <tr>
                     <th>
@@ -101,10 +101,11 @@
         </div>
 
 
-
-
-        <div id='debug' class="col-md-4 rcorners"> </div>
-        <div class="col-md-2"></div>
+        <div class="col-lg-1"></div>
+        <div class="col-sm-5 col-md-4 col-lg-4">
+            <div id='debug' class="rcorners"> </div>
+        </div>
+            <div class="col-md-1 col-lg-1"></div>
 
     </div>
 
