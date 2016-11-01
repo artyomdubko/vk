@@ -23,7 +23,7 @@ body {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 40%;
+    width: 55%;
 }
 
 .rcorners {
@@ -39,4 +39,14 @@ body {
 
 #debug{ 
     width: 90% !important;
+}
+.dialog-style{
+	float:left; 
+	margin:12px 12px 20px 0;
+}
+#dialog-confirm{
+    display:none;
+}
+button[disabled=disabled], button:disabled {
+    color: gray;
 }

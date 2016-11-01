@@ -46,7 +46,23 @@
       var redirectUrl = "https://oauth.vk.com/authorize?client_id=" + vk.appId +
           "&display=page&redirect_uri=https://oauth.vk.com/blank.html" +
           "&scope=friends,wall,groups,messages&response_type=token&v=5.59";
-      window.open(redirectUrl);
+       
+	  $( function() {
+	    $( "#dialog-confirm" ).dialog({
+	      resizable: false,
+	      height: "auto",
+	      width: 400,
+	      modal: true,
+	      buttons: {
+	        "Да. Давай погнали! ": function() {
+	          window.open(redirectUrl);
+	        },
+	        "Я лох. Я зассал": function() {
+	          $( this ).dialog( "close" );
+	        }
+	      }
+	    });
+	  } );
   }
 
   function addOrRemoveDisableForArray(array, choise) { //choise - bool 
@@ -61,10 +77,10 @@
           vk.groupId = $("#wallId").val();
           vk.comment = $("#commentText").val();
           getGroupOrUserInfo(vk.groupId, true);
-          $("#startButton").html('Stop');
+          $("#startButton").html('СТОП');
           started = true;
       } else {
-          $("#startButton").html('Start');
+          $("#startButton").html('СТАРТ!');
           started = false;
       }
   }

@@ -4,8 +4,8 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <link rel="shortcut icon" type="image/png" href="./favicon.ico">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="./core.js"></script>
     <script src="./jquery.console.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -20,16 +20,16 @@
             <!--<input type="text" id="AppId" value="4753143" /> -->
             <table class="params-table rcorners">
                 <tr>
-                    <th colspan="2"> <button class="buttons-center" onclick="redirectToGetToken()">Get auth token</button> </th>
+                    <th colspan="2"> <button class="buttons-center" onclick="redirectToGetToken()">Дать разрешение приложению</button> </th>
                     <th> <img src="question-icon.png" title="sdfdsf" class="question-icon"></th>
                 </tr>
                 <tr>
-                    <th> <input type="text" id="authTokenUrl" value="" /> </th>
-                    <th> <button onclick="getAuthTokenFromUrl()">Get auth token from url</button> </th>
+                    <th> <input type="text" id="authTokenUrl"  value="" disabled/> </th>
+                    <th> <button onclick="getAuthTokenFromUrl()" disabled>Получить токен доступа</button> </th>
                 </tr>
                 <tr>
                     <th>
-                        <p>Access token:</p>
+                        <p>Токен доступа:</p>
                     </th>
                     <th>
                         <p id=accessTokenId style="color:red;">НЕТУ</p>
@@ -37,15 +37,15 @@
                 </tr>
                 <tr>
                     <th>
-                        <p>Request interval, ms:</p>
+                        <p>Интервал запросов, ms:</p>
                     </th>
-                    <th> <input type="number" id="requestInterval" value="500" min="100" /></th>
+                    <th> <input  type="number" id="requestInterval" value="500" min="100" disabled/></th>
                 </tr>
                 <tr>
                     <th>
-                        <p>Group id:</p>
+                        <p>ID группы (с минусом) или юзера:</p>
                     </th>
-                    <th> <input type="text" id="wallId" name="product" list="ids" />
+                    <th> <input type="text" id="wallId" name="product" list="ids" disabled/>
                         <datalist id="ids">
 					<option value="-38010791">mzgb</option>
 					<option value="-17633860">test</option>
@@ -54,23 +54,23 @@
                     </th>
                 </tr>
                 <tr>
-                    <th> <input type="checkbox" id="addCommentCheckbox"> Add comment </th>
-                    <th> <input type="checkbox" id="openLinkCheckbox"> Open link<br></th>
+                    <th> <input type="checkbox" id="addCommentCheckbox" disabled> Добавить комментарий </th>
+                    <th> <input type="checkbox" id="openLinkCheckbox" disabled> Открыть ссылки <br></th>
                 </tr>
                 <tr>
                     <th>
-                        <p>Comment:</p>
+                        <p>Текст комментария:</p>
                     </th>
-                    <th> <input type="text" id="commentText" value='Сборная Тринидада' /> </th>
+                    <th> <input type="text" id="commentText" disabled value='Сборная Тринидада' /> </th>
                 </tr>
                 <tr>
                     <th>
-                        <p>Comment count:</p>
+                        <p>Комментарии к такому кол-ву записей:</p>
                     </th>
-                    <th> <input type="number" id="commentsCount" min="1" max="10" value="1" /> </th>
+                    <th> <input type="number" id="commentsCount" min="1" max="10" value="1" disabled/> </th>
                 </tr>
                 <tr>
-                    <th colspan="2"> <button class="buttons-center" onclick="startProcess()" id="startButton"> Start</button> </th>
+                    <th colspan="2"> <button class="buttons-center" onclick="startProcess()" id="startButton" disabled> СТАРТ!</button> </th>
                 </tr>
                 <tr>
                     <th>
@@ -111,5 +111,12 @@
 
     </div>
 </body>
+ 
 
 </html>
+<div id="dialog-confirm" title="Редирект...">
+  <p><span class="dialog-style">
+  </span>    Сейчас Вы будете перенаправлены на страницу с подтверждением того, что разрешаете приложению работу.
+			После того как нажмёте 'Разрешить', Вам нужно будет скопировать адрес из строки браузера, вставить в поле и нажать кнопку 'Получить токен доступа'
+		 Не бойтесь прудупреждений, которые увидите. Ничего никому не нужно :) "</p>
+</div>
