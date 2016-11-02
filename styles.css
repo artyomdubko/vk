@@ -50,3 +50,6 @@ body {
 button[disabled=disabled], button:disabled {
     color: gray;
 }
+.hidden {
+    display: none;
+}
