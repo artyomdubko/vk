@@ -1,6 +1,7 @@
 ﻿  var vk = {
       appId: 4753143,
       groupId: "",
+      postId: "",
       postsCount: "",
       comment: "",
       currentUrl: window.location.href,
@@ -17,52 +18,62 @@
           'width': 500,
           'height': 475,
           'bg': '#f9ebd2'
-      });
-      demo.log('Initialized!');
-      demo.success('Success!');
-      demo.error('Error!');
-      demo.warning('Warning!');
+      }); 
+      demo.success('Hello!'); 
 
-      checkUrlForToken(vk.currentUrl);
+      //checkUrlForToken(vk.currentUrl);
+      $(".add-comment-checkbox").change(function() {
+          if (this.checked) {
+              addOrRemoveDisableForArray($('.comments-params '), false);
+          } else {
+              addOrRemoveDisableForArray($('.comments-params '), true);
+          }
+      });
   });
 
   function getAuthTokenFromUrl() {
-      var urlWithToken = $('#authTokenUrl').val();
+      var urlWithToken = $('.auth-token-url').val();
       checkUrlForToken(urlWithToken);
   }
 
   function checkUrlForToken(url) {
       if (url.indexOf("access_token") > -1) {
           vk.accessToken = url.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1]; //check if we redirected with token 
-          $("#accessTokenId").html("<p style='color:green;'>ЕСТЬ</p>");
-          addOrRemoveDisableForArray($('.getting-auth').children(), true)
+          $(".access-token-id").html("<p style='color:green;'>ЕСТЬ</p>");
+          addOrRemoveDisableForArray($('.getting-token'), true);
+          addOrRemoveDisableForArray($('.request-params'), false);
+		   demo.success('Токен получен. Можно запускать процесс');
       } else {
-          addOrRemoveDisableForArray($('.getting-auth').children(), false)
+          addOrRemoveDisableForArray($('.getting-auth'), false);
+          demo.error('Что-то не так с введеным урлом. Перепроверьте его или перезапустите');
       }
   }
 
   function redirectToGetToken() {
-      vk.appId = $('#AppId').val();
+      vk.appId = $('.app-id').val();
       var redirectUrl = "https://oauth.vk.com/authorize?client_id=" + vk.appId +
           "&display=page&redirect_uri=https://oauth.vk.com/blank.html" +
           "&scope=friends,wall,groups,messages&response_type=token&v=5.59";
-       
-	  $( function() {
-	    $( "#dialog-confirm" ).dialog({
-	      resizable: false,
-	      height: "auto",
-	      width: 400,
-	      modal: true,
-	      buttons: {
-	        "Да. Давай погнали! ": function() {
-	          window.open(redirectUrl);
-	        },
-	        "Я лох. Я зассал": function() {
-	          $( this ).dialog( "close" );
-	        }
-	      }
-	    });
-	  } );
+
+      $(function() {
+          $(".dialog-confirm").dialog({
+              resizable: false,
+              height: "auto",
+              width: 400,
+              modal: true,
+              buttons: {
+                  "Да. Давай погнали! ": function() {
+                      window.open(redirectUrl);
+                      addOrRemoveDisableForArray($('.redirect-button'), true);
+                      addOrRemoveDisableForArray($('.getting-token'), false);
+                      $(this).dialog("close");
+                  },
+                  "Я лох. Я зассал": function() {
+                      $(this).dialog("close");
+                  }
+              }
+          });
+      });
   }
 
   function addOrRemoveDisableForArray(array, choise) { //choise - bool 
@@ -73,14 +84,20 @@
 
   function startProcess() {
       if (!started) {
-          vk.requestInterval = parseInt($('#requestInterval').val());
-          vk.groupId = $("#wallId").val();
-          vk.comment = $("#commentText").val();
-          getGroupOrUserInfo(vk.groupId, true);
-          $("#startButton").html('СТОП');
-          started = true;
+          vk.requestInterval = parseInt($('.request-interval').val());
+          vk.groupId = $(".wall-id").val();
+          vk.comment = $(".commentText").val();
+		  if (vk.groupId!=""){
+	          getGroupOrUserInfo(vk.groupId, true);
+	          $(".start-button").html('СТОП');
+			  demo.log('Процесс запущен. Ждем нового поста в группе...');
+              started = true;
+		  }
+		  else {
+		    demo.error('Надо ввести ID группы!');
+		  }
       } else {
-          $("#startButton").html('СТАРТ!');
+          $(".start-button").html('СТАРТ!');
           started = false;
       }
   }
@@ -92,16 +109,18 @@
       }
       var postId;
       var response = "";
+	  vk.comment = $('.comment-text').val();
       doAnAjax("GET", "wall.get", params, function(data) {
           if (!data.error) {
               response = data.response;
-              if (!isFirstTime && response.count > vk.postsCount) { //if new post added
-                  if (response.items[0].is_pinned != 1) { //check if new posts pinned. then we need items[1]
-                      postId = response.items[0].id;
+              if (!isFirstTime && response.count > vk.postsCount) {    //if new post added
+			      demo.success('Добавлен новый пост!');
+                  if (response.items[0].is_pinned != 1) {             //check if new posts pinned. then we need items[1]
+                      vk.postId = response.items[0].id;
                   } else {
-                      postId = response.items[1].id;
+                      vk.postId = response.items[1].id;
                   }
-                  handleNewPost(response, vk.groupId, postId, vk.comment);
+                  handleNewPost(response, vk.groupId, vk.postId, vk.comment);
               } else { //check group again if there isn't a new post
                   if (started) { //check if started clicked
                       setTimeout(function() {
@@ -110,16 +129,17 @@
                   }
               }
               vk.postsCount = response.count;
-              $("#postsCount").html(vk.postsCount);
-              $("#lastPostValue").html(response.items[0].text.substring(0, 100)); //response[0] - posts count, response[1-...] - posts 
+              $(".posts-count").html(vk.postsCount);
+              $(".last-post-value").html(response.items[0].text.substring(0, 100)); //response[0] - posts count, response[1-...] - posts 
           } else {
-              alert(data.error.error_code + data.error.error_msg);
+              demo.error(data.error.error_code + data.error.error_msg);
           }
       });
   }
 
   function handleNewPost(newPostResponse, groupId, postId, commentText) {
-      if ($('#addCommentCheckbox').is(":checked")) {
+      if ($('.add-comment-checkbox').is(":checked")) {
+	     demo.log('Добавляем комментарий');
           var params = {
               "owner_id": groupId,
               "post_id": postId,
@@ -129,12 +149,17 @@
           doAnAjax("POST", "wall.createComment", params, function(data) {
               if (!data.error) {
                   response = data.response;
+				  if (response.comment_id!=0){
+				  var commentUrl = 'https://vk.com/wall' + groupId +'_' + postId + '?reply=' + response.comment_id;
+				  demo.success('Комментарий добавлен! Тут - <a target="_blank" href=' + commentUrl + '>' + commentUrl + '</a>');
+					
+				  }
               } else {
-                  alert(data.error.error_code + data.error.error_msg);
+                  demo.error(data.error.error_code + data.error.error_msg);
               }
           });
       }
-      if ($('#openLinkCheckbox').is(":checked")) {
+      if ($('.open-link-checkbox').is(":checked")) {
           var lastPostArray = newPostResponse.items[0].text.replace(/\n/g, " ").split(" ");
           lastPostArray.forEach(function(entry) {
               if (isURL(entry)) {
@@ -150,7 +175,7 @@
       var paramsString = getParamsStringFromDictionary(params);
       var newUrl = " https://api.vk.com/method/" + methodName + "?&access_token=" + vk.accessToken + "&v=5.59&" + paramsString;
       var response = "";
-      $("#requestsCount").html(parseInt($("#requestsCount").html()) + 1); //increment request count
+      $(".requests-count").html(parseInt($(".requests-count").html()) + 1); //increment request count
 
 
       $.ajax({
@@ -165,20 +190,20 @@
           },
           error: function(xhr, exception) {
               //$('.rtnMsg').html("opps: " + textStatus + " : " + errorThrown);  
-              if (xhr.status === 0) {
-                  alert('Not connect.\n Verify Network.');
+              if (xhr.status === 0) { 
+                  demo.error('Not connect.\n Verify Network.');
               } else if (xhr.status == 404) {
-                  alert('Requested page not found. [404]');
+                  demo.error('Requested page not found. [404]');
               } else if (xhr.status == 500) {
-                  alert('Internal Server Error [500].');
+                  demo.error('Internal Server Error [500].');
               } else if (exception === 'parsererror') {
-                  alert('Requested JSON parse failed.');
+                  demo.error('Requested JSON parse failed.');
               } else if (exception === 'timeout') {
-                  alert('Time out error.');
+                  demo.error('Time out error.');
               } else if (exception === 'abort') {
-                  alert('Ajax request aborted.');
+                  demo.error('Ajax request aborted.');
               } else {
-                  alert('Uncaught Error.\n' + xhr.responseText);
+                  demo.error('Uncaught Error.\n' + xhr.responseText);
               }
               return callBack(myRtnA); // return callBack() with myRtna
           }
