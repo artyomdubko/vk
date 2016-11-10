@@ -97,15 +97,20 @@
 		    demo.error('Надо ввести ID группы!');
 		  }
       } else {
-          $(".start-button").html('СТАРТ!');
-          started = false;
+	     stopProcess();
       }
   }
 
+  function stopProcess() {
+	      demo.log('Процесс остановлен');
+          $(".start-button").html('СТАРТ!');
+          started = false;
+  }
 
   function getGroupOrUserInfo(groupId, isFirstTime) { //set to dropdown change
       var params = {
-          "owner_id": groupId
+          "owner_id": groupId,
+		  "extended" : 1
       }
       var postId;
       var response = "";
@@ -129,10 +134,13 @@
                   }
               }
               vk.postsCount = response.count;
-              $(".posts-count").html(vk.postsCount);
-              $(".last-post-value").html(response.items[0].text.substring(0, 100)); //response[0] - posts count, response[1-...] - posts 
+			  var title = response.groups[0].name != null ? response.groups[0].name : response.profiles[0].first_name + " " + response.profiles[0].last_name;
+              $(".wall-title").html(title);
+              //$(".posts-count").html(vk.postsCount);
+              //$(".last-post-value").html(response.items[0].text.substring(0, 100)); //response[0] - posts count, response[1-...] - posts 
           } else {
               demo.error(data.error.error_code + data.error.error_msg);
+			  stopProcess();
           }
       });
   }
@@ -157,6 +165,7 @@
               } else {
                   demo.error(data.error.error_code + data.error.error_msg);
               }
+				  stopProcess();
           });
       }
       if ($('.open-link-checkbox').is(":checked")) {
@@ -189,6 +198,7 @@
               return callBack(data);
           },
           error: function(xhr, exception) {
+
               //$('.rtnMsg').html("opps: " + textStatus + " : " + errorThrown);  
               if (xhr.status === 0) { 
                   demo.error('Not connect.\n Verify Network.');
@@ -205,6 +215,7 @@
               } else {
                   demo.error('Uncaught Error.\n' + xhr.responseText);
               }
+			  stopProcess();
               return callBack(myRtnA); // return callBack() with myRtna
           }
       });
