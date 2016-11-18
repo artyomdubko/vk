@@ -4,6 +4,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <link rel="shortcut icon" type="image/png" href="./favicon.ico">
+	<title>Vk Helper</title>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="./core.js"></script>
@@ -17,15 +18,22 @@
     <div class="row">
         <div class="col-md-1 col-lg-2"></div>
         <div class="col-sm-7 col-md-6 col-lg-4">
-            <input type="text" name="product" list="appIds" class="hidden app-id" value="4753143" />
+            <table class="params-table rcorners">
+                <tr>
+                    <th>
+                        <p>App ID</p>
+                    </th>
+                    <th> 
+            <input type="text" name="product" list="appIds" class="app-id" value="4753143" />
             <datalist id="appIds">
 					<option value="4753143">4753143</option>
 					<option value="5686734">5686734</option> 
-				</datalist>
-            <table class="params-table rcorners">
+				</datalist> </th>
+					 <th> <img src="question-icon.png" title="Можно его не трогать" class="question-icon"></th>
+                </tr>
                 <tr>
                     <th colspan="2"> <button class="buttons-center redirect-button" onclick="redirectToGetToken()">Дать разрешение приложению</button> </th>
-                    <th> <img src="question-icon.png" title="sdfdsf" class="question-icon"></th>
+                    <th> <img src="question-icon.png" title=" Сейчас Вы будете перенаправлены на страницу с подтверждением того, что разрешаете приложению работу. После того как нажмёте 'Разрешить', Вам нужно будет скопировать адрес из строки браузера, вставить в поле и нажать кнопку 'Получить токен доступа' Не бойтесь прудупреждений, которые увидите. Ничего никому не нужно :)" class="question-icon"></th>
                 </tr>
                 <tr>
                     <th> <input class="getting-token auth-token-url" type="text" value="" disabled/> </th>
@@ -38,28 +46,36 @@
                     <th>
                         <p class="access-token-id" style="color:red;">НЕТУ</p>
                     </th>
+					 <th> <img src="question-icon.png" title="Есть уже токен. В его отсуствите работа приложения невозможна" class="question-icon"></th>
                 </tr>
                 <tr>
                     <th>
                         <p>Интервал запросов, ms:</p>
                     </th>
                     <th> <input type="number" class="request-params request-interval" value="500" min="100" disabled/></th>
+					 <th> <img src="question-icon.png" title="Количество милисекунд между запросами. Если будут ошибки - сделать его меньше" class="question-icon"></th>
                 </tr>
                 <tr>
                     <th>
-                        <p>ID группы (с минусом) или юзера:</p>
+                        <p>ID группы или юзера:</p>
                     </th>
                     <th> <input type="text" class="request-params wall-id" name="product" list="ids" disabled/>
                         <datalist id="ids">
 					<option value="-38010791">mzgb</option>
 					<option value="-17633860">test</option>
 					<option value="-92868471">pubquiz</option>
+					<option value="-80512025">bernard</option>
 				</datalist>
                     </th>
+					 <th> 
+					 <img src="question-icon.png" title="Сюда надо ввести ID необходимой группы или юзера. Для группы перед числом нужно добавить знак минуса" class="question-icon">
+					 </th>
                 </tr>
                 <tr>
                     <th> <input type="checkbox" class="request-params add-comment-checkbox" disabled> Добавить комментарий </th>
                     <th> <input type="checkbox" class="request-params open-link-checkbox" disabled> Открыть ссылки <br></th>
+					 <th> <img src="question-icon.png" title="Как действия предпринимать после добавления нового поста" class="question-icon"></th>
+                
                 </tr>
                 <tr>
                     <th>
