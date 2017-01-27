@@ -170,11 +170,18 @@
       }
       if ($('.open-link-checkbox').is(":checked")) {
           var lastPostArray = newPostResponse.items[0].text.replace(/\n/g, " ").split(" "); 
-		  if (typeof newPostResponse.items[0].attachments[0].link.url != "undefined") {
-  			   lastPostArray.push (newPostResponse.items[0].attachments[0].link.url);
-  			}
+		  try {
+			  if (typeof newPostResponse.items[0].attachments != "undefined") {
+			   if (typeof newPostResponse.items[0].attachments[0].link.url != "undefined") {
+				   lastPostArray.push (newPostResponse.items[0].attachments[0].link.url);
+				}
+			  }
+		  }catch (e) { 
+		        demo.error("Ошибка:" + e);
+			}
           lastPostArray.forEach(function(entry) {
               if (isURL(entry)) {
+				  demo.log('Открываем ссылку: ' + entry);
                   window.open(entry);
               }
           });
