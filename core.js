@@ -145,7 +145,7 @@
       });
   }
 
-  function handleNewPost(newPostResponse, groupId, postId, commentText) { 
+  function handleNewPost(newPostResponse, groupId, postId, commentText) {
       if ($('.add-comment-checkbox').is(":checked")) {
 	     demo.log('Добавляем комментарий');
           var params = {
