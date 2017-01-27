@@ -170,9 +170,6 @@
       }
       if ($('.open-link-checkbox').is(":checked")) {
           var lastPostArray = newPostResponse.items[0].text.replace(/\n/g, " ").split(" ");
-		  if (typeof newPostResponse.items[0].attachments[0].link.url != "undefined") {
-			   lastPostArray.push (newPostResponse.items[0].attachments[0].link.url);
-			}
           lastPostArray.forEach(function(entry) {
               if (isURL(entry)) {
                   window.open(entry);
