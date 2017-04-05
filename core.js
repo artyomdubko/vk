@@ -1,13 +1,14 @@
 ﻿  var vk = {
       appId: 4753143,
-      groupId: "",
-      postId: "",
+      groupId: "", 
+      newPost: "",
       postsCount: "",
       comment: "",
       currentUrl: window.location.href,
       requestInterval: 500, //by default
       currentUrlWithoutAnything: (location.protocol + '//' + location.host + location.pathname).replace(/\/$/, ""),
-      accessToken: ""
+      accessToken: "",
+      linkToOpen: ""
   }
   var started = false;
   var demo;
@@ -18,8 +19,8 @@
           'width': 500,
           'height': 475,
           'bg': '#f9ebd2'
-      }); 
-      demo.success('Hello!'); 
+      });
+      demo.success('Hello!');
 
       //checkUrlForToken(vk.currentUrl);
       $(".add-comment-checkbox").change(function() {
@@ -42,7 +43,7 @@
           $(".access-token-id").html("<p style='color:green;'>ЕСТЬ</p>");
           addOrRemoveDisableForArray($('.getting-token'), true);
           addOrRemoveDisableForArray($('.request-params'), false);
-		   demo.success('Токен получен. Можно запускать процесс');
+          demo.success('Токен получен. Можно запускать процесс');
       } else {
           addOrRemoveDisableForArray($('.getting-auth'), false);
           demo.error('Что-то не так с введеным урлом. Перепроверьте его или перезапустите');
@@ -83,110 +84,121 @@
   }
 
   function startProcess() {
-      if (!started) {
-          vk.requestInterval = parseInt($('.request-interval').val());
-          vk.groupId = $(".wall-id").val();
-          vk.comment = $(".commentText").val();
-		  if (vk.groupId!=""){
-	          getGroupOrUserInfo(vk.groupId, true);
-	          $(".start-button").html('СТОП');
-			  demo.log('Процесс запущен. Ждем нового поста в группе...');
-              started = true;
-		  }
-		  else {
-		    demo.error('Надо ввести ID группы!');
-		  }
-      } else {
-	     stopProcess();
-      }
+      try {
+          if (!started) {
+              vk.requestInterval = parseInt($('.request-interval').val());
+              vk.groupId = $(".wall-id").val();
+              vk.comment = $(".commentText").val();
+              if (vk.groupId != "") {
+                  getGroupOrUserInfo(vk.groupId, true);
+                  $(".start-button").html('СТОП');
+                  demo.log('Процесс запущен. Ждем нового поста в группе...');
+                  started = true;
+              } else {
+                  demo.error('Надо ввести ID группы!');
+              }
+		  } else {
+			  stopProcess();
+		  } 
+      } catch (ex) {
+          demo.error(ex.message);
+          stopProcess();
+      }  
   }
 
   function stopProcess() {
-	      demo.log('Процесс остановлен');
-          $(".start-button").html('СТАРТ!');
-          started = false;
+      demo.log('Процесс остановлен');
+      $(".start-button").html('СТАРТ!');
+      started = false;
   }
 
   function getGroupOrUserInfo(groupId, isFirstTime) { //set to dropdown change
-      var params = {
-          "owner_id": groupId,
-		  "extended" : 1
-      }
-      var postId;
-      var response = "";
-	  vk.comment = $('.comment-text').val();
-      doAnAjax("GET", "wall.get", params, function(data) {
-          if (!data.error) {
-              response = data.response;
-              if (!isFirstTime && response.count > vk.postsCount) {    //if new post added
-			      demo.success('Добавлен новый пост!');
-                  if (response.items[0].is_pinned != 1) {             //check if new posts pinned. then we need items[1]
-                      vk.postId = response.items[0].id;
-                  } else {
-                      vk.postId = response.items[1].id;
-                  }
-                  handleNewPost(response, vk.groupId, vk.postId, vk.comment);
-              } else { //check group again if there isn't a new post
-                  if (started) { //check if started clicked
-                      setTimeout(function() {
-                          getGroupOrUserInfo(groupId, false)
-                      }, vk.requestInterval);
-                  }
-              }
-              vk.postsCount = response.count;
-			  var title = response.groups[0].name != null ? response.groups[0].name : response.profiles[0].first_name + " " + response.profiles[0].last_name;
-              $(".wall-title").html(title);
-              //$(".posts-count").html(vk.postsCount);
-              //$(".last-post-value").html(response.items[0].text.substring(0, 100)); //response[0] - posts count, response[1-...] - posts 
-          } else {
-              demo.error(data.error.error_code + data.error.error_msg);
-			  stopProcess();
-          }
-      });
-  }
-
-  function handleNewPost(newPostResponse, groupId, postId, commentText) { 
-      if ($('.add-comment-checkbox').is(":checked")) {
-	     demo.log('Добавляем комментарий');
+      try {
           var params = {
               "owner_id": groupId,
-              "post_id": postId,
-              "message": commentText
-          }
+              "extended": 1
+          } 
           var response = "";
-          doAnAjax("POST", "wall.createComment", params, function(data) {
+          vk.comment = $('.comment-text').val();
+          doAnAjax("GET", "wall.get", params, function(data) {
               if (!data.error) {
                   response = data.response;
-				  if (response.comment_id!=0){
-				  var commentUrl = 'https://vk.com/wall' + groupId +'_' + postId + '?reply=' + response.comment_id;
-				  demo.success('Комментарий добавлен! Тут - <a target="_blank" href=' + commentUrl + '>' + commentUrl + '</a>');
-					
-				  }
+                  if (!isFirstTime && response.count > vk.postsCount) { //if new post added
+                      demo.success('Добавлен новый пост!');
+                      if (response.items[0].is_pinned != 1) { //check if new posts pinned. then we need items[1]
+                          vk.newPost = response.items[0];
+                      } else {
+                          vk.newPost = response.items[1];
+                      }
+                      handleNewPost();
+                  } else { //check group again if there isn't a new post
+                      if (started) { //check if started clicked
+                          setTimeout(function() {
+                              getGroupOrUserInfo(groupId, false)
+                          }, vk.requestInterval);
+                      }
+                  }
+                  vk.postsCount = response.count;
+                  var title = response.groups[0].name != null ? response.groups[0].name : response.profiles[0].first_name + " " + response.profiles[0].last_name;
+                  $(".wall-title").html(title);
+                  //$(".posts-count").html(vk.postsCount);
+                  //$(".last-post-value").html(response.items[0].text.substring(0, 100)); //response[0] - posts count, response[1-...] - posts 
               } else {
                   demo.error(data.error.error_code + data.error.error_msg);
               }
-				  stopProcess();
           });
+      } catch (ex) {
+          demo.error(ex.message);
+          stopProcess();
       }
-      if ($('.open-link-checkbox').is(":checked")) {
-          var lastPostArray = newPostResponse.items[0].text.replace(/\n/g, " ").split(" "); 
-		  try {
-			  if (typeof newPostResponse.items[0].attachments != "undefined") {
-			   if (typeof newPostResponse.items[0].attachments[0].link.url != "undefined") {
-				   lastPostArray.push (newPostResponse.items[0].attachments[0].link.url);
-				}
-			  }
-		  }catch (e) { 
-		        demo.error("Ошибка:" + e);
-			}
-          lastPostArray.forEach(function(entry) {
-              if (isURL(entry)) {
-				  demo.log('Открываем ссылку: ' + entry);
-                  window.open(entry);
-              }
-          });
-      }
+  }
 
+  function handleNewPost() {
+      try {
+          if ($('.add-comment-checkbox').is(":checked")) {
+              demo.log('Добавляем комментарий');
+              var params = {
+                  "owner_id": vk.groupId,
+                  "post_id": vk.newPost.id,
+                  "message": vk.comment
+              }
+              var response = "";
+              doAnAjax("POST", "wall.createComment", params, function(data) {
+                  if (!data.error) {
+                      response = data.response;
+                      if (response.comment_id != 0) {
+                          var commentUrl = 'https://vk.com/wall' + vk.groupId + '_' + vk.newPost.id + '?reply=' + response.comment_id;
+                          demo.success('Комментарий добавлен! Тут - <a target="_blank" href=' + commentUrl + '>' + commentUrl + '</a>');
+                      }
+                  } else {
+                      demo.error(data.error.error_code + data.error.error_msg);
+                  }
+              });
+          }
+          if ($('.open-link-checkbox').is(":checked")) { 
+              try {
+                  if (typeof vk.newPost.attachments != "undefined") {
+                      if (typeof vk.newPost.attachments[0].link.url != "undefined") { 
+						  vk.newPost.text += " " + vk.newPost.attachments[0].link.url;
+                      }
+                  }
+              } catch (e) {
+                  demo.error("Ошибка:" + e);
+              }
+			  var links = linkify.find(vk.newPost.text);
+          }
+              links.forEach(function(entry) {
+                  if (isURL(entry.href)) {                      
+					  demo.log('Открываем ссылку: ' + "<a href=" + entry.href + ">" + entry.href + "</a>");
+					  var win = window.open(entry.href, '_blank');
+					  win.focus();
+                  }
+              }); 
+      } catch (ex) {
+          demo.error(ex.message);
+      } finally {
+          stopProcess();
+      }
   }
 
 
@@ -210,7 +222,7 @@
           error: function(xhr, exception) {
 
               //$('.rtnMsg').html("opps: " + textStatus + " : " + errorThrown);  
-              if (xhr.status === 0) { 
+              if (xhr.status === 0) {
                   demo.error('Not connect.\n Verify Network.');
               } else if (xhr.status == 404) {
                   demo.error('Requested page not found. [404]');
@@ -225,7 +237,7 @@
               } else {
                   demo.error('Uncaught Error.\n' + xhr.responseText);
               }
-			  stopProcess();
+              stopProcess();
               return callBack(myRtnA); // return callBack() with myRtna
           }
       });
