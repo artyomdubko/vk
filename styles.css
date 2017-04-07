@@ -53,3 +53,6 @@ button[disabled=disabled], button:disabled {
 .hidden {
     display: none;
 }
+.comments-list{
+  width: 500px;
+}

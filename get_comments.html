@@ -7,7 +7,7 @@
 	<title>Vk Helper</title>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="./core.js"></script>
+    <script src="./comments.js"></script>
     <script src="./jquery.console.js"></script>
     <script src="./linkifyjs/linkify.min.js"></script>
     <script src="./linkifyjs/linkify-jquery.min.js"></script>
@@ -49,42 +49,18 @@
                         <p class="access-token-id" style="color:red;">НЕТУ</p>
                     </th>
 					 <th> <img src="question-icon.png" title="Есть ли уже токен. В его отсуствите работа приложения невозможна" class="question-icon"></th>
-                </tr>
+                </tr> 
                 <tr>
                     <th>
-                        <p>Интервал запросов, ms:</p>
+                        <p>URL поста:</p>
                     </th>
-                    <th> <input type="number" class="request-params request-interval" value="500" min="100" disabled/></th>
-					 <th> <img src="question-icon.png" title="Количество милисекунд между запросами. Если будут ошибки - сделать его меньше" class="question-icon"></th>
-                </tr>
-                <tr>
-                    <th>
-                        <p>ID группы или юзера:</p>
-                    </th>
-                    <th> <input type="text" class="request-params wall-id" name="product" list="ids" disabled/>
-                        <datalist id="ids">
-					<option value="-38010791">mzgb</option>
-					<option value="-132762337">test</option>
-					<option value="-92868471">pubquiz</option>
-					<option value="-80512025">bernard</option>
-				</datalist>
+                    <th> 
+					    <input type="text" class="request-params wall-id" name="product" value='https://vk.com/wall-142068104_12' disabled/> 
                     </th>
 					 <th> 
-					 <img src="question-icon.png" title="Сюда надо ввести ID необходимой группы или юзера. Для группы перед числом нужно добавить знак минуса" class="question-icon">
+					 <img src="question-icon.png" title="Сюда надо ввести URL поста" class="question-icon">
 					 </th>
-                </tr>
-                <tr>
-                    <th> <input type="checkbox" class="request-params add-comment-checkbox" disabled> Добавить комментарий </th>
-                    <th> <input type="checkbox" class="request-params open-link-checkbox" disabled> Открыть ссылки <br></th>
-					 <th> <img src="question-icon.png" title="Как действия предпринимать после добавления нового поста" class="question-icon"></th>
-                
-                </tr>
-                <tr>
-                    <th>
-                        <p>Текст комментария:</p>
-                    </th>
-                    <th> <input type="text" class="comments-params comment-text" disabled value='Сборная Тринидада' /> </th>
-                </tr>
+                </tr> 
                 <!--<tr>
 			                    <th>
 			                        <p>Комментарии к такому кол-ву записей:</p>
@@ -92,8 +68,16 @@
 			                    <th> <input type="number" class="comments-params comments-сount" min="1" max="10" value="1" disabled/> </th>
 			                </tr>-->
                 <tr>
-                    <th colspan="2"> <button class="request-params buttons-center start-button" onclick="startProcess()" disabled> СТАРТ!</button> </th>
-                </tr>
+                    <th colspan="2"> <button class="request-params buttons-center start-button" onclick="getComments()" disabled> Дай комменты!</button> </th>
+                </tr> 
+                <tr>
+                    <th>
+                        <p>Комментарии:</p>
+                    <th colspan="2">
+					    <textarea rows="1" class="comments-list"></textarea>
+                    <th> 
+                    </th> 
+                </tr> 
                  <!--<tr>
                     <th>
                         <p>Posts count:</p>
@@ -109,23 +93,7 @@
                     <th>
                         <p class='last-post-value'> - </p>
                     </th>
-                </tr>-->
-                <tr>
-                    <th>
-                        <p>Название группы (юзера):</p>
-                    </th>
-                    <th>
-                        <p class='wall-title'> - </p>
-                    </th> 
-                </tr>
-                <tr>
-                    <th>
-                        <p>Requests count:</p>
-                    </th>
-                    <th>
-                        <p class='requests-count'> 0 </p>
-                    </th>
-                </tr>
+                </tr>--> 
             </table>
 
         </div>
