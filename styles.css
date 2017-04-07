@@ -56,3 +56,6 @@ button[disabled=disabled], button:disabled {
 .comments-list{
   width: 500px;
 }
+.wall-id{
+  width: 400px;
+}

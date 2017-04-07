@@ -1,14 +1,14 @@
 ﻿  var vk = {
       appId: 4753143,
-      groupId: "", 
-      postId: "", 
+      groupId: "",
+      postId: "",
       postUrl: "",
       newPost: "",
       postsCount: "",
-      comment: "",
-      currentUrl: window.location.href, 
+      comments: [],
+      currentUrl: window.location.href,
       currentUrlWithoutAnything: (location.protocol + '//' + location.host + location.pathname).replace(/\/$/, ""),
-      accessToken: ""  
+      accessToken: ""
   }
   var started = false;
   var demo;
@@ -84,49 +84,65 @@
   }
 
   function getComments() {
-      try { 
-			  vk.postUrl = $(".wall-id").val(); 
-			  var first = vk.postUrl.indexOf('wall');
-              var second = vk.postUrl.indexOf('_');
-			  vk.groupId = vk.postUrl.substr(first+4,second-first-4)
-			  vk.postId = vk.postUrl.substr(second+1);
-			  
-              if (vk.groupId != "") {
-                  demo.log('Процесс запущен. Ща ща ща...'); 
-				  var params = {
+      try {
+          vk.postUrl = $(".wall-id").val();
+          var first = vk.postUrl.indexOf('wall');
+          var second = vk.postUrl.indexOf('_');
+          vk.groupId = vk.postUrl.substr(first + 4, second - first - 4)
+          vk.postId = vk.postUrl.substr(second + 1);
+
+          if (vk.groupId != "") {
+              demo.log('Процесс запущен. Ща ща ща...');
+              var params = {
                   "owner_id": vk.groupId,
-                  "post_id":  vk.postId,
-				  "count":100
-              }
-              var response = "";
-              doAnAjax("GET", "wall.getComments", params, function(data) {
-                  if (!data.error) { 
-				     $(".comments-list").html("");
-					  $(".comments-list").attr('rows', 1)
-                      response = data.response; 
-					  var comments = response.items;
-					  var commentsText = "";
-					  comments.forEach(function(comment) {             
-							  commentsText += comment.text.replace(/(\r\n|\n|\r)/gm," ") + '&#13;&#10;' ; 
-							  $(".comments-list").attr('rows', parseInt ($(".comments-list").attr('rows')) +1)
-					  }); 
-					   $(".comments-list").html(commentsText);
-                  } else {
-                      demo.error(data.error.error_code + data.error.error_msg);
-                  }
-              });
-                  started = true;
-              } else {
-                  demo.error('Неверный или пустой URL!');
+                  "post_id": vk.postId,
+                  "count": 100
               } 
+              getCommentsAjax(params);
+          } else {
+              demo.error('Неверный или пустой URL!');
+          }
       } catch (ex) {
-          demo.error(ex.message); 
-      }  
+          demo.error(ex.message);
+      }
   }
-  
+
+  function getCommentsAjax(params) {
+      try {
+          doAnAjax("GET", "wall.getComments", params, function(data) {
+              if (!data.error) {
+                  $(".comments-list").attr('rows', 1)
+                  response = data.response;
+                  Array.prototype.push.apply(vk.comments, response.items);
+                  if (response.items.length > 99) {
+                      vk.comments.pop();
+                      var params = {
+                          "owner_id": vk.groupId,
+                          "post_id": vk.postId,
+                          "count": 100,
+                          "start_comment_id": response.items[99].id
+                      }
+                      getCommentsAjax(params);
+                  } else {
+                      var commentsText = "";
+                      $(".comments-list").html("");
+                      vk.comments.forEach(function(comment) {
+                          commentsText += comment.text.replace(/(\r\n|\n|\r)/gm, " ") + '&#13;&#10;';
+                          $(".comments-list").attr('rows', parseInt($(".comments-list").attr('rows')) + 1)
+                      });
+                      $(".comments-list").html(commentsText);
+                  }
+              } else {
+                  demo.error(data.error.error_code + data.error.error_msg);
+              }
+          });
+      } catch (ex) {
+          demo.error(ex.message);
+      }
+  }
 
   function doAnAjax(type, methodName, params, callBack) {
-	   
+
       var paramsString = getParamsStringFromDictionary(params);
       var newUrl = " https://api.vk.com/method/" + methodName + "?&access_token=" + vk.accessToken + "&v=5.59&" + paramsString;
       var response = "";
@@ -141,10 +157,10 @@
           crossDomain: true,
           dataType: 'jsonp',
           success: function(data, textStatus, xhr) {
-              return callBack(data); 
+              return callBack(data);
           },
           error: function(xhr, exception) {
- 
+
               //$('.rtnMsg').html("opps: " + textStatus + " : " + errorThrown);  
               if (xhr.status === 0) {
                   demo.error('Not connect.\n Verify Network.');
