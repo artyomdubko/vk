@@ -192,7 +192,7 @@
 					  var win = window.open(entry.href, '_blank');
 					  win.focus();
                   }
-				   }); 
+			 }); 
           }
              
       } catch (ex) {
