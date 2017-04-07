@@ -192,8 +192,9 @@
 					  var win = window.open(entry.href, '_blank');
 					  win.focus();
                   }
+				   }); 
           }
-              }); 
+             
       } catch (ex) {
           demo.error(ex.message);
       } finally {
