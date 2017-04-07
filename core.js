@@ -186,13 +186,13 @@
                   demo.error("Ошибка:" + e);
               }
 			  var links = linkify.find(vk.newPost.text);
-          }
               links.forEach(function(entry) {
                   if (isURL(entry.href)) {                      
 					  demo.log('Открываем ссылку: ' + "<a href=" + entry.href + ">" + entry.href + "</a>");
 					  var win = window.open(entry.href, '_blank');
 					  win.focus();
                   }
+          }
               }); 
       } catch (ex) {
           demo.error(ex.message);
