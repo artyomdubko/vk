@@ -85,6 +85,8 @@
 
   function getComments() {
       try {
+          $(".comments-list").html("");
+          $(".comments-list").attr('rows', 1)
           vk.postUrl = $(".wall-id").val();
           var first = vk.postUrl.indexOf('wall');
           var second = vk.postUrl.indexOf('_');
@@ -111,7 +113,6 @@
       try {
           doAnAjax("GET", "wall.getComments", params, function(data) {
               if (!data.error) {
-                  $(".comments-list").attr('rows', 1)
                   response = data.response;
                   Array.prototype.push.apply(vk.comments, response.items);
                   if (response.items.length > 99) {
